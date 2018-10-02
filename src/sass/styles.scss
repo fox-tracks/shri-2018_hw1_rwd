@@ -1,0 +1,20 @@
+// common
+@import "normalize.scss";
+@import "variables.scss";
+@import "mixins.scss";
+@import "scaffoldings.scss";
+@import "blocks/page.scss";
+@import "blocks/visually-hidden.scss";
+
+//header
+@import "blocks/header.scss";
+@import "blocks/hamburger-btn.scss";
+@import "blocks/main-nav.scss";
+
+//main
+@import "blocks/main.scss";
+
+
+//footer
+@import "blocks/footer.scss";
+@import "blocks/info-nav.scss";

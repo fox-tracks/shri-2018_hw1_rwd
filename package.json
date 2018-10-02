@@ -1,0 +1,45 @@
+{
+  "name": "entrance-task-2-2-css",
+  "version": "1.0.0",
+  "description": "Entrance task 2-css, SHRI-2018-2",
+  "main": "index.js",
+  "author": "Andriyanova",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^9.0.0",
+    "browser-sync": "^2.23.2",
+    "del": "^3.0.0",
+    "eslint": "^5.3.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-debug": "^3.1.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-posthtml": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-svgstore": "^6.1.0",
+    "gulp-uglify-es": "^1.0.4",
+    "gulp-webp": "^2.3.0",
+    "posthtml-include": "^1.1.0",
+    "run-sequence": "^2.2.1",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.2.0"
+  },
+  "scripts": {
+    "stylelint": "stylelint \"**/*.scss\" --syntax scss",
+    "eslint": "eslint \"src/js/**/*.js\"",
+    "fix": "eslint --fix \"src/js/**/*.js\"",
+    "test": "npm run stylelint && npm run eslint",
+    "build": "gulp build-full",
+    "start": "npm run build && gulp serve"
+  },
+  "browserslist": [
+    "last 4 versions",
+    "Firefox ESR"
+  ]
+}

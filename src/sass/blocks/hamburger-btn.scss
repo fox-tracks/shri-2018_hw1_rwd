@@ -1,0 +1,51 @@
+.hamburger-btn {
+  height: 14px;
+  width: 16px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+  &__bar {
+    position: relative;
+    top: 0;
+    display: block;
+    width: 16px;
+    height: 3px;
+    background-color: #000;
+    transition: background-color 0.5s;
+
+    &::before,
+    &::after {
+      @extend .hamburger-btn__bar;
+
+      position: absolute;
+      display: block;
+      content: "";
+      transition: transform 0.3s, top 0.3s;
+    }
+
+    &::before {
+      top: 5px;
+    }
+
+    &::after {
+      top: -5px;
+    }
+  }
+}
+
+.hamburger-btn_action_close .hamburger-btn__bar {
+  background-color: rgba(0, 0, 0, 0);
+
+  &::before {
+    top: 0;
+    transform: rotate(45deg);
+    background-color: rgb(0, 0, 0);
+  }
+
+  &::after {
+    top: 0;
+    transform: rotate(-45deg);
+    background-color: rgb(0, 0, 0);
+  }
+}

@@ -1,0 +1,16 @@
+@mixin indent($margin, $padding) {
+  margin: $margin;
+  padding: $padding;
+}
+
+@mixin no-list() {
+  @include indent(0, 0);
+
+  list-style: none;
+}
+
+@mixin wrapper() {
+  max-width: 1286px;
+  width: 94%;
+  margin: 0 auto;
+}

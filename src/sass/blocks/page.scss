@@ -1,0 +1,20 @@
+.page {
+  min-height: 100vh;
+  font-weight: 400;
+  color: $black;
+  background-color: rgb(255, 255, 255);
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 1366px;
+    min-width: 375px;
+    min-height: 100vh;
+    margin: 0 auto;
+
+    &_state_blur {
+      filter: blur(3px);
+    }
+  }
+}
+

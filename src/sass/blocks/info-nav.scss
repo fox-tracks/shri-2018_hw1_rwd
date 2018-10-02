@@ -1,0 +1,43 @@
+.info-nav {
+  &__list {
+    @include no-list();
+
+    display: flex;
+    align-content: center;
+  }
+
+  &__item {
+    margin-right: 20px;
+  }
+
+  &__link {
+    display: block;
+    height: 64px;
+    line-height: 64px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 670px) {
+  .info-nav {
+    max-width: 440px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__list {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    &__item {
+      height: auto;
+      margin-right: 0;
+    }
+
+    &__link {
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+}
