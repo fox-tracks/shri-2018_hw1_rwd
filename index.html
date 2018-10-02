@@ -39,20 +39,8 @@
         </div>
       </header>
       <main class="page__event-feed event-feed">
-        <h1>Лента событий</h1>
-        <template id="card-template">
-          <div class="event-feed__card card card--icon-type card--size-type card--action-type">
-            <button class="card__close-btn">Закрыть</button>
-            <button class="card__open-btn"></button>
-            <h3 class="card__title">Title</h3>
-            <p class="card__source"></p>
-            <p class="card__time"></p>
-            <p class="card__description"></p>
-
-          </div>
-          <h3></h3>
-        </template>
-
+        <h1 class="page__title">Лента событий</h1>
+        <section class="event-feed__wrapper"></section>
       </main>
 
       <!--футер -->
@@ -80,7 +68,18 @@
         </div>
       </footer>
     </div>
-    <script src="js/main.min.js"></script>
+    <template>
+      <article class="event-feed__card card">
+        <button class="card__close-btn">Закрыть</button>
+        <button class="card__open-btn">Раскрыть</button>
+        <h3 class="card__title">Title</h3>
+        <p class="card__source">Прибор-источник</p>
+        <p class="card__time">Время события</p>
+        <p class="card__description">Сообщение</p>
+        <div class="card__data">Данные</div>
+      </article>
+    </template>
+    <script src="js/main.js"></script>
   </body>
 
 </html>

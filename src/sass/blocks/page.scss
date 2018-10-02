@@ -7,14 +7,10 @@
   &__wrapper {
     display: flex;
     flex-direction: column;
-    max-width: 1366px;
-    min-width: 375px;
+    max-width: 1920px;
+    min-width: 320px;
     min-height: 100vh;
     margin: 0 auto;
-
-    &_state_blur {
-      filter: blur(3px);
-    }
   }
 }
 
