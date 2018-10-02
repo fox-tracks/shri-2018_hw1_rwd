@@ -26,7 +26,7 @@
                 <a href="#" class="main-nav__link main-nav__link_state_active">События</a>
               </li>
               <li class="main-nav__item">
-                <a href="#" class="main-nav__link main-nav__link_state_active">Сводка</a>
+                <a href="#" class="main-nav__link ">Сводка</a>
               </li>
               <li class="main-nav__item">
                 <a href="#" class="main-nav__link">Устройства</a>
@@ -38,8 +38,20 @@
           </nav>
         </div>
       </header>
-      <main class="page__event-feed">
+      <main class="page__event-feed event-feed">
         <h1>Лента событий</h1>
+        <template id="card-template">
+          <div class="event-feed__card card card--icon-type card--size-type card--action-type">
+            <button class="card__close-btn">Закрыть</button>
+            <button class="card__open-btn"></button>
+            <h3 class="card__title">Title</h3>
+            <p class="card__source"></p>
+            <p class="card__time"></p>
+            <p class="card__description"></p>
+
+          </div>
+          <h3></h3>
+        </template>
 
       </main>
 
