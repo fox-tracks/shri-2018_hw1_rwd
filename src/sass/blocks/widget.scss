@@ -1,0 +1,10 @@
+.widget {
+  &_graph {
+    width: 100%;
+    min-height: 144px;
+    height: auto;
+    background-image: url("../img/Richdata.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}

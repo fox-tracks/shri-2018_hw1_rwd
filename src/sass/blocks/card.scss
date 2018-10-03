@@ -1,7 +1,132 @@
 .card {
+  position: relative;
   border-radius: 20px;
   background-color: $card-color;
-  padding: 20px 25px;
+  background-repeat: no-repeat;
+  background-position: 25px 20px;
 
+  &_action_critical {
+    background-color: $critical-color;
+    color: #fff;
+  }
 
+  &_icon_stats {
+    background-image: url(" ../img/stats.svg");
+    background-position: 25px 27px;
+  }
+
+  &_icon_key {
+    background-image: url(" ../img/key.svg");
+    background-position: 25px 20px;
+  }
+
+  &_icon_robot-cleaner {
+    background-image: url(" ../img/robot-cleaner.svg");
+    background-position: 25px 27px;
+  }
+
+  &_icon_router {
+    background-image: url(" ../img/router.svg");
+    background-position: 25px 20px;
+  }
+
+  &_icon_thermal {
+    background-image: url(" ../img/temperature.svg");
+    background-position: 25px 20px;
+  }
+
+  &_icon_ac {
+    background-image: url(" ../img/air-conditioner.svg");
+    background-position: 25px 20px;
+  }
+
+  &_icon_music {
+    background-image: url(" ../img/music.svg");
+    background-position: 25px 20px;
+    background-size: 36px 37px;
+  }
+
+  &_icon_fridge {
+    background-image: url(" ../img/fridge.svg");
+    background-position: 25px 20px;
+    background-size: 28px 37px;
+  }
+
+  &_icon_battery {
+    background-image: url(" ../img/battery.svg");
+    background-position: 25px 27px;
+    background-size: 35px 18px;
+  }
+
+  &_icon_cam {
+    background-image: url(" ../img/cam.svg");
+    background-position: 25px 20px;
+  }
+
+  &_icon_kettle {
+    background-image: url(" ../img/kettle.svg");
+    background-position: 25px 20px;
+    background-size: 30px 35px;
+  }
+
+  &__close-btn,
+  &__open-btn {
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    right: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__close-btn {
+    top: 25px;
+    background-image: url(" ../img/cross.svg");
+  }
+
+  &__open-btn {
+    bottom: 25px;
+    background-image: url(" ../img/next.svg");
+  }
+
+  &__wrapper {
+    padding: 20px 45px 0 25px;
+  }
+
+  &__title {
+    font-size: 0.7rem;
+    margin: 0 0 0 67px;
+    height: 45px;
+    position: relative;
+    //overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__description {
+    font-size: 0.9rem;
+  }
+
+  //&__title::after {
+  //  display: block;
+  //  content: '...';
+  //  position: absolute;
+  //  bottom: 11%;
+  //  right: 0;
+  //  height: 16px;
+  //  width: 17px;
+  //  background-color: $card-color;
+  //  font-size: 0.7rem;
+  //
+  //}
+
+  &__source,
+  &__time {
+    font-size: 0.6rem;
+  }
+
+  &__extra-content {
+    border-radius: 20px;
+    background-color: $card-color;
+    padding: 0 45px 20px 25px;
+  }
 }

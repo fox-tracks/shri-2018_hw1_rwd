@@ -39,7 +39,7 @@
         </div>
       </header>
       <main class="page__event-feed event-feed">
-        <h1 class="page__title">Лента событий</h1>
+        <h2 class="event-feed__title">Лента событий</h2>
         <section class="event-feed__wrapper"></section>
       </main>
 
@@ -70,13 +70,14 @@
     </div>
     <template>
       <article class="event-feed__card card">
-        <button class="card__close-btn">Закрыть</button>
-        <button class="card__open-btn">Раскрыть</button>
-        <h3 class="card__title">Title</h3>
-        <p class="card__source">Прибор-источник</p>
-        <p class="card__time">Время события</p>
-        <p class="card__description">Сообщение</p>
-        <div class="card__data">Данные</div>
+          <button class="card__close-btn"></button>
+          <button class="card__open-btn"></button>
+        <div class="card__wrapper">
+          <h3 class="card__title">Title</h3>
+          <p class="card__source">Прибор-источник</p>
+          <p class="card__time">Время события</p>
+        </div>
+        <div class="card__extra-content"></div>
       </article>
     </template>
     <script src="js/main.js"></script>

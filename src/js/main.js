@@ -173,28 +173,91 @@
   const template = document.querySelector('template').content.querySelector('article.event-feed__card');
   const cardContainer = document.querySelector('.event-feed__wrapper');
 
-  function createGraph (data) {
-      // построение графиков не реализовано
-      const newDiv = document.createElement('div');
+  // генерация виджетов
 
-      newDiv.classList.add('card__data');
-      newDiv.classList.add('card__data_type_graph');
-      return newDiv;
+  // график
+  function createGraph () {
+    // построение графиков не реализовано, вставлена картинка
+    return `<div class="widget__wrap widget_graph"></div>`;
   }
 
-    function createClimateParams(data) {
-        // построение графиков не реализовано
-        const newDiv = document.createElement('div');
+  // климатические характеристики
+  function getClimateParams(data) {
+    const { temperature, humidity } = data;
 
-        newDiv.classList.add('card__data');
-        newDiv.classList.add('card__data_type_graph');
-        return newDiv;
-    }
+    return (`<div class="widget__wrap widget_climat">
+        <div class="climat-widget__temperature">Температура: <span>${temperature} С</span></div>
+        <div class="climat-widget__humidity">Влажность : <span>${humidity}%</span></div>
+      </div>`);
+  }
 
+  // музыкальный плейер
+  function createPlayer(data) {
+    const { albumcover, artist, volume } = data;
+
+    const { name, length } = data.track;
+
+    return (`<div class="widget__wrap widget_player">
+    <div class="player-widget__player">
+        <img class="player-widget__album-cover" src="${albumcover}" width="52px" height="53px" alt="Обложка альбома">
+        <span class="player-widget__artist">${artist} - </span>
+        <span class="player-widget__track-name">${name}</span>
+        <div class="player-widget__track-progress-bar">
+            <input class="player-widget__track-bar" type="range" value="31" min="0" max="271">
+            <span class="player-widget__track-length">${length}</span>
+        </div>
+    </div>
+    <div class="player-widget__controls">
+        <button class="player-widget__begin-btn"></button>
+        <button class="player-widget__end-btn"></button>
+        <div class="player-widget__volume-progress-bar">
+            <input class="player-widget__volume-bar" type="range" value="${volume}" min="0" max="100">
+            <span class="player-widget__volume-value">${volume}</span>
+        </div>
+    </div>
+  </div>`);
+  }
+
+  // диалоговая панель
+  function createDialog(data) {
+    const { buttons } = data;
+
+    return (`<div class="widget__wrap widget_dialog">
+        <button class="dialog-widget__agree-btn">${buttons[0]}</button>
+        <button class="dialog-widget__cancel-btn">${buttons[1]}</button>
+      </div>`);
+  }
+
+  //виджет камеры
+
+ // картинка вставляется из src
+  function createVideo() {
+
+    const IMG_PATH = 'img/'; // относительный путь до картинок
+    const IMG_NAMES = [
+      'BitMap@1x.png',
+      'BitMap@2x.png',
+      'BitMap@3x.png',
+    ]; // массив с названиями картинок
+
+    const IMG_SRCS = IMG_NAMES.map(img => {
+      const arr= []; // переименовать
+      arr.push(IMG_PATH + img)
+
+      return arr ;
+    }); // массив src
+
+    console.log(IMG_SRCS);
+
+    return (`<div class="widget__wrap widget_cam">
+        <img class="cam-widget__image" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Камера">
+      </div>`);
+  }
 
   function createCardByData (template, dataItem) {
     const card = template.cloneNode(true);
     const { icon } = dataItem;
+    const extraContent = card.querySelector('div.card__extra-content');
 
     card.classList.add('card_icon_' + icon);
     card.classList.add('card_size_' + dataItem.size);
@@ -203,46 +266,56 @@
     card.querySelector('h3.card__title').textContent = dataItem.title;
     card.querySelector('p.card__source').textContent = dataItem.source;
     card.querySelector('p.card__time').textContent = dataItem.time;
-    card.querySelector('p.card__description').textContent = dataItem.description;
 
+    if(dataItem.description !== null) {
+      let description = document.createElement('div');
+      description.classList.add('card__description');
+      description.textContent = dataItem.description;
+
+      extraContent.appendChild(description);
+    } else {
+      extraContent.style.display = 'none';
+    }
 
 
     if(dataItem.hasOwnProperty('data')) {
-        let vidget;
-        const { data } = dataItem;
-        switch (icon) {
-        case 'stats':
-            vidget = createGraph(data);
-            break;
-        case 'thermal':
-            vidget = getClimateParams(data);
-            break;
-        case 'music':
-            vidget = createPlayer(data);
-            break;
-        case 'fridge':
-            vidget = createDialog(data);
-            break;
-        case 'cam':
-            vidget = createVideo(data);
-            break;
-        default:
-            break;
+      let widget = document.createElement('div');
+      widget.classList.add('card__widget');
+      widget.classList.add('widget');
 
-        }
-        card.appendChild(vidget);
+      const {data} = dataItem;
+
+      switch (icon) {
+      case 'stats':
+        widget.innerHTML = createGraph();
+        console.log(widget);
+        break;
+      case 'thermal':
+        widget.innerHTML = getClimateParams(data);
+        break;
+      case 'music':
+        widget.innerHTML = createPlayer(data);
+        break;
+      case 'fridge':
+        widget.innerHTML = createDialog(data);
+        break;
+      case 'cam':
+        widget.innerHTML = createVideo();
+        break;
+      default:
+        break;
+      }
+      extraContent.appendChild(widget);
     }
-
-    switch ()
     return card;
-
   }
 
   function createFragmentWithCards(data) {
     const fragment = document.createDocumentFragment();
 
     data.forEach(dataItem => {
-      const card = createCardByData(template, dataItem)
+      const card = createCardByData(template, dataItem);
+
       fragment.appendChild(card);
     });
 
@@ -258,4 +331,3 @@
 
   return renderCards(events);
 })();
-
