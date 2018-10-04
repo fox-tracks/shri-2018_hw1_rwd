@@ -1,7 +1,48 @@
 .event-feed {
   margin-top: 64px;
+
+  &__card {
+    margin-bottom: 17px;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    margin: 0.9rem 0 0.95rem 0;
+  }
+}
+
+@media only screen and (min-width: 620px) {
+  .event-feed {
+    &__wrapper {
+      max-width: 1460px;
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-flow: dense;
+    }
+    
+    &__card {
+      margin-bottom: 0;
+    }
+    &__card_size_s {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &__card_size_m {
+      grid-column: span 3;
+    }
+
+    &__card_size_l {
+      grid-column: span 4;
+      grid-row: span 3;
+    }
+  }
 }
 
 @media only screen and (min-width: 650px) {
-  margin-top: 0;
+  .event-feed {
+    margin-top: 0;
+  }
 }
