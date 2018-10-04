@@ -261,6 +261,7 @@
 
     card.classList.add('card_icon_' + icon);
     card.classList.add('card_size_' + dataItem.size);
+    card.classList.add('event-feed__card_size_' + dataItem.size);
     card.classList.add('card_action_' + dataItem.type);
 
     card.querySelector('h3.card__title').textContent = dataItem.title;
