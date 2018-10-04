@@ -1,6 +1,6 @@
 .card {
   position: relative;
-  border-radius: 20px;
+  border-radius: 22px;
   background-color: $card-color;
   background-repeat: no-repeat;
 
@@ -10,7 +10,6 @@
 
   &_action_critical {
     background-color: $critical-color;
-    border: 1px solid white;
     color: #fff;
   }
 
@@ -155,7 +154,7 @@
   }
 
   &__extra-content {
-    border-radius: 20px;
+    border-radius: 18px;
     background-color: $card-color;
     padding: 0 35px 16px 16px;
   }
