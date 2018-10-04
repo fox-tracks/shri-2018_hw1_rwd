@@ -178,16 +178,16 @@
   // график
   function createGraph () {
     // построение графиков не реализовано, вставлена картинка
-    return `<div class="widget__wrap widget_graph"></div>`;
+    return '<div class="widget__wrap widget__wrap_graph"></div>';
   }
 
   // климатические характеристики
   function getClimateParams(data) {
     const { temperature, humidity } = data;
 
-    return (`<div class="widget__wrap widget_climat">
-        <div class="climat-widget__temperature">Температура: <span>${temperature} С</span></div>
-        <div class="climat-widget__humidity">Влажность : <span>${humidity}%</span></div>
+    return (`<div class="widget__wrap climat">
+        <div class="climat__temperature">Температура: <span>${temperature} С</span></div>
+        <div class="climat__humidity">Влажность : <span>${humidity}%</span></div>
       </div>`);
   }
 
@@ -197,22 +197,22 @@
 
     const { name, length } = data.track;
 
-    return (`<div class="widget__wrap widget_player">
-    <div class="player-widget__player">
-        <img class="player-widget__album-cover" src="${albumcover}" width="52px" height="53px" alt="Обложка альбома">
-        <span class="player-widget__artist">${artist} - </span>
-        <span class="player-widget__track-name">${name}</span>
-        <div class="player-widget__track-progress-bar">
-            <input class="player-widget__track-bar" type="range" value="31" min="0" max="271">
-            <span class="player-widget__track-length">${length}</span>
+    return (`<div class="widget__wrap player">
+    <div class="player__player">
+        <img class="player__album-cover" src="${albumcover}" width="52px" height="53px" alt="Обложка альбома">
+        <span class="player__artist">${artist} - </span>
+        <span class="player__track-name">${name}</span>
+        <div class="player__track-progress-bar">
+            <input class="player__track-bar" type="range" value="31" min="0" max="271">
+            <span class="player__track-length">${length}</span>
         </div>
     </div>
-    <div class="player-widget__controls">
-        <button class="player-widget__begin-btn"></button>
-        <button class="player-widget__end-btn"></button>
-        <div class="player-widget__volume-progress-bar">
-            <input class="player-widget__volume-bar" type="range" value="${volume}" min="0" max="100">
-            <span class="player-widget__volume-value">${volume}</span>
+    <div class="player-widget__controls controls">
+        <button class="controls__begin-btn"></button>
+        <button class="controls__end-btn"></button>
+        <div class="controls__volume-progress-bar">
+            <input class="controls__volume-bar" type="range" value="${volume}" min="0" max="100">
+            <span class="controls__volume-value">${volume}</span>
         </div>
     </div>
   </div>`);
@@ -222,15 +222,15 @@
   function createDialog(data) {
     const { buttons } = data;
 
-    return (`<div class="widget__wrap widget_dialog">
-        <button class="dialog-widget__agree-btn">${buttons[0]}</button>
-        <button class="dialog-widget__cancel-btn">${buttons[1]}</button>
+    return (`<div class="widget__wrap dialog">
+        <button class="dialog__agree-btn">${buttons[0]}</button>
+        <button class="dialog__cancel-btn">${buttons[1]}</button>
       </div>`);
   }
 
   //виджет камеры
 
- // картинка вставляется из src
+  // картинка вставляется из src
   function createVideo() {
 
     const IMG_PATH = 'img/'; // относительный путь до картинок
