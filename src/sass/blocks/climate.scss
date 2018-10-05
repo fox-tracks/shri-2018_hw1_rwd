@@ -1,0 +1,38 @@
+.climat {
+  display: flex;
+  justify-content: flex-start;
+  //max-width: 260px;
+
+
+  font-size: 0.7rem;
+  line-height: 0.8rem;
+
+  &__temperature-value,
+  &__humidity-value {
+    font-weight: bold;
+  }
+
+  &__humidity {
+    margin-left: 70px;
+  }
+}
+
+@media only screen and (min-width: 680px) {
+  .climat {
+    font-size: 0.8rem;
+
+    &__humidity {
+      margin-left: 30px;
+    }
+  }
+}
+
+@media only screen and (min-width: 920px) {
+  .climat {
+    font-size: 0.6rem;
+
+    &__humidity {
+      margin-left: 52px;
+    }
+  }
+}

@@ -23,6 +23,14 @@
   }
 
   &__btn:active {
-    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
   }
 }
+
+@media only screen and (min-width: 680px) {
+  .dialog {
+    font-size: 20px;
+
+  }
+}
+
