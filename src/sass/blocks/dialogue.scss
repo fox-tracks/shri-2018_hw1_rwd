@@ -1,4 +1,4 @@
-.dialog {
+.dialogue{
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -28,9 +28,11 @@
 }
 
 @media only screen and (min-width: 680px) {
-  .dialog {
-    font-size: 20px;
+  .dialogue {
 
+    &__btn {
+      font-size: 20px;
+    }
   }
 }
 

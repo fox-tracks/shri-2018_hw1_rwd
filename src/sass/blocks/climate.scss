@@ -1,4 +1,4 @@
-.climat {
+.climate {
   display: flex;
   justify-content: flex-start;
   //max-width: 260px;
@@ -18,7 +18,7 @@
 }
 
 @media only screen and (min-width: 680px) {
-  .climat {
+  .climate {
     font-size: 0.8rem;
 
     &__humidity {
@@ -28,7 +28,7 @@
 }
 
 @media only screen and (min-width: 920px) {
-  .climat {
+  .climate {
     font-size: 0.6rem;
 
     &__humidity {

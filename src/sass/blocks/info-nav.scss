@@ -13,7 +13,7 @@
 
   &__item {
     width: 40%;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -29,7 +29,7 @@
   }
 }
 
-@media (min-width: 650px) {
+@media (min-width: 680px) {
   .info-nav {
     width: 60%;
     max-width: 550px;
