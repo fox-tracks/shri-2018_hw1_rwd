@@ -1,0 +1,14 @@
+.climat {
+  display: flex;
+  justify-content: space-between;
+  max-width: 260px;
+
+
+  font-size: 0.7rem;
+  line-height: 0.8rem;
+
+  &__temperature-value,
+  &__humidity-value {
+    font-weight: bold;
+  }
+}

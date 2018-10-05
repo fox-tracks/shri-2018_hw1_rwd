@@ -1,0 +1,28 @@
+.dialog {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  max-width: 282px;
+
+  &__btn {
+    width: 132px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.15rem;
+    font-weight: bold;
+  }
+
+  &__btn_agree {
+    background-color: $yellow;
+  }
+
+  &__btn_cancel {
+    background-color: #e5e5e5;
+    margin-left: 5px;
+  }
+
+  &__btn:active {
+    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+  }
+}
