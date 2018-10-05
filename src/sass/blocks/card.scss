@@ -1,4 +1,5 @@
 .card {
+  border: 1px solid red;
   position: relative;
   border-radius: 22px;
   background-color: $card-color;
@@ -114,35 +115,47 @@
   }
 
   &__wrapper {
-    padding: 16px 35px 0 16px;
+    height: 100%;
+    padding: 23px 35px 0 16px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
   }
 
+
+  &__title-wrap {
+    height: 36px;
+
+  }
   &__title {
     font-size: 0.7rem;
     line-height: 0.85rem;
-    margin: 0 0 16px 51px;
-    height: 36px;
+    margin: 0 0 0 51px;
     position: relative;
-    //overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
   }
 
   &__description {
     font-size: 0.9rem;
-    color: $black;
+    color: #333;
     padding-top: 16px;
+  }
+
+  &__widget {
+    margin-top: 25px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin: auto 0 16px;
   }
 
   &__source,
   &__time {
     font-size: 0.6rem;
     line-height: 0.7rem;
-    margin: 0 0 16px;
+    margin: 15px 0 0;
   }
 
   &__source {
@@ -151,6 +164,7 @@
 
   &__time {
     width: 40%;
+    text-align: right;
   }
 
   &__extra-content {
@@ -160,13 +174,28 @@
   }
 }
 
-@media only screen and (min-width: 620px) {
+@media only screen and (min-width: 650px) {
   .card {
     display: flex;
     flex-direction: column;
 
+    &__wrapper {
+      padding-top: 16px;
+    }
     &__extra-content {
       flex-grow: 1;
     }
+
+  }
+
+  .card_size_s .card__info {
+   flex-direction: column;
+  }
+
+  .card_size_s .card__time {
+    text-align: left;
   }
 }
+
+
+

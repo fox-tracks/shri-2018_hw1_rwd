@@ -5,11 +5,13 @@ html {
   line-height: $text-lh;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
+  color: $text-color;
 }
 
 *,
 *::after,
 *::before {
+  color: inherit;
   box-sizing: inherit;
   outline: none;
   -webkit-tap-highlight-color: transparent;
