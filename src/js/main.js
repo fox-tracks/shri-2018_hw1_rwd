@@ -176,9 +176,28 @@
   // генерация виджетов
 
   // график
+  // todo chart.js(canvas, new chart, data, options)
+
   function createGraph () {
-    // построение графиков не реализовано, вставлена картинка
-    return '<div class="widget__wrap widget__wrap_graph"></div>';
+    const IMG_PATH = 'img/'; // относительный путь до картинок
+    const IMG_NAMES = [
+      'Richdata@1x.png',
+      'Richdata@2x.png',
+      'Richdata@3x.png',
+    ]; // массив с названиями картинок
+
+    const IMG_SRCS = IMG_NAMES.map(img => {
+      const srcs = []; // переименовать
+      srcs.push(IMG_PATH + img);
+
+      return srcs ;
+    }); // массив src
+
+    console.log(IMG_SRCS);
+
+    return `<div class="widget__wrap widget__wrap_graph">
+                <img class="cam-widget__image" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Графики">
+            </div>`;
   }
 
   // климатические характеристики
@@ -186,8 +205,8 @@
     const { temperature, humidity } = data;
 
     return (`<div class="widget__wrap climat">
-        <div class="climat__temperature">Температура: <span>${temperature} С</span></div>
-        <div class="climat__humidity">Влажность : <span>${humidity}%</span></div>
+        <div class="climat__temperature">Температура: <span class="climat__temperature-value">${temperature} С</span></div>
+        <div class="climat__humidity">Влажность : <span class="climat__humidity-value">${humidity}%</span></div>
       </div>`);
   }
 
@@ -198,23 +217,16 @@
     const { name, length } = data.track;
 
     return (`<div class="widget__wrap player">
-    <div class="player__player">
-        <img class="player__album-cover" src="${albumcover}" width="52px" height="53px" alt="Обложка альбома">
-        <span class="player__artist">${artist} - </span>
-        <span class="player__track-name">${name}</span>
-        <div class="player__track-progress-bar">
-            <input class="player__track-bar" type="range" value="31" min="0" max="271">
-            <span class="player__track-length">${length}</span>
+        <img class="player__album-cover" src="${albumcover}" width="52px" height="53px" alt="Florence & The Machine">
+        <div class="player__track-info">
+            <span class="player__track-name">${artist} - ${name}</span>
         </div>
-    </div>
-    <div class="player-widget__controls controls">
-        <button class="controls__begin-btn"></button>
-        <button class="controls__end-btn"></button>
-        <div class="controls__volume-progress-bar">
-            <input class="controls__volume-bar" type="range" value="${volume}" min="0" max="100">
-            <span class="controls__volume-value">${volume}</span>
-        </div>
-    </div>
+        <input class="player__track-bar" type="range" value="31" min="0" max="271">
+        <span class="player__track-length">${length}</span>
+        <button class="player__back-btn"></button>
+        <button class="player__next-btn"></button>
+        <input class="player__volume-bar" type="range" value="${volume}" min="0" max="100">
+        <span class="player__volume-value">${volume}%</span>
   </div>`);
   }
 
@@ -223,8 +235,8 @@
     const { buttons } = data;
 
     return (`<div class="widget__wrap dialog">
-        <button class="dialog__agree-btn">${buttons[0]}</button>
-        <button class="dialog__cancel-btn">${buttons[1]}</button>
+        <button class="dialog__btn dialog__btn_agree">${buttons[0]}</button>
+        <button class="dialog__btn dialog__btn_cancel">${buttons[1]}</button>
       </div>`);
   }
 
@@ -232,26 +244,7 @@
 
   // картинка вставляется из src
   function createVideo() {
-
-    const IMG_PATH = 'img/'; // относительный путь до картинок
-    const IMG_NAMES = [
-      'BitMap@1x.png',
-      'BitMap@2x.png',
-      'BitMap@3x.png',
-    ]; // массив с названиями картинок
-
-    const IMG_SRCS = IMG_NAMES.map(img => {
-      const arr= []; // переименовать
-      arr.push(IMG_PATH + img)
-
-      return arr ;
-    }); // массив src
-
-    console.log(IMG_SRCS);
-
-    return (`<div class="widget__wrap widget_cam">
-        <img class="cam-widget__image" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Камера">
-      </div>`);
+    return '<div class="widget__wrap widget__wrap_cam"></div>';
   }
 
   function createCardByData (template, dataItem) {
@@ -288,7 +281,7 @@
 
       switch (icon) {
       case 'stats':
-        widget.innerHTML = createGraph();
+        widget.innerHTML = createGraph(data);
         console.log(widget);
         break;
       case 'thermal':
