@@ -77,7 +77,11 @@
 
   // картинка вставляется из src
   function createVideo() {
-    return '<div class="widget__wrap widget__wrap_cam"></div>';
+    return `<div class="widget__wrap widget__wrap_cam camera"></div>
+            <div class="camera__controls"> 
+                <p class="camera__zoom">Приближение: <span class="camera__zoom-value">78%</span></p>
+                <p class="camera__brightness">Яркость: <span class="camera__brightness-value">50%</span></p>
+            </div>`;
   }
 
   function createCardByData(template, dataItem) {

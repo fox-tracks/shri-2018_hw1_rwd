@@ -1,0 +1,24 @@
+.camera {
+  width: 100%;
+  padding-top: 67%;
+  border-radius: 20px;
+  font-size: 0;
+  line-height: 0;
+  background-image: url("../img/BitMap@1x.png");
+
+  background-position: center;
+  background-repeat: repeat;
+  background-size: 150%;
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    color: $text-color;
+    font-size: 0.6rem;
+  }
+
+  &__zoom,
+  &__brightness {
+    @include indent(13px 0 0, 0);
+  }
+}
