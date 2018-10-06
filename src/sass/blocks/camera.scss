@@ -1,14 +1,26 @@
 .camera {
+  touch-action: none;
+  position: relative;
   width: 100%;
   padding-top: 67%;
   border-radius: 20px;
   font-size: 0;
   line-height: 0;
   background-image: url("../img/BitMap@1x.png");
-
-  background-position: center;
-  background-repeat: repeat;
+  background-position-x: 0;
+  background-position-y: center;
+  background-repeat: no-repeat;
   background-size: 150%;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+         only screen and (min-resolution: 144dpi) {
+    background-image: url("../img/BitMap@2x.png");
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 3),
+  only screen and (min-resolution: 288dpi) {
+    background-image: url("../img/BitMap@3x.png");
+  }
 
   &__controls {
     display: flex;
@@ -20,5 +32,15 @@
   &__zoom,
   &__brightness {
     @include indent(13px 0 0, 0);
+  }
+
+  &__scroll {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, .5);
   }
 }

@@ -27,8 +27,6 @@
       return srcs;
     }); // массив src
 
-    console.log(IMG_SRCS);
-
     return `<div class="widget__wrap widget__wrap_graph">
                 <img class="cam-widget__image" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Графики">
             </div>`;
@@ -77,7 +75,7 @@
 
   // картинка вставляется из src
   function createVideo() {
-    return `<div class="widget__wrap widget__wrap_cam camera"></div>
+    return `<div class="widget__wrap widget__wrap_cam camera"><div class="camera__scroll"></div></div>
             <div class="camera__controls"> 
                 <p class="camera__zoom">Приближение: <span class="camera__zoom-value">78%</span></p>
                 <p class="camera__brightness">Яркость: <span class="camera__brightness-value">50%</span></p>
@@ -119,7 +117,6 @@
       switch (icon) {
       case 'stats':
         widget.innerHTML = createGraph(data);
-        console.log(widget);
         break;
       case 'thermal':
         widget.innerHTML = getClimateParams(data);
