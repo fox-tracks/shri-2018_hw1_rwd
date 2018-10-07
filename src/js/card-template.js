@@ -28,7 +28,7 @@
     }); // массив src
 
     return `<div class="widget__wrap widget__wrap_graph">
-                <img class="cam-widget__image" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Графики">
+                <img class="widget__wrap_graph-img" src="${IMG_SRCS[0]}" srcset="${IMG_SRCS[1]} 2x, ${IMG_SRCS[2]} 3x" width="100%" height="100%" alt="Графики">
             </div>`;
   }
 

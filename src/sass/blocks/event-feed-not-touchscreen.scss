@@ -10,12 +10,10 @@
   background-color: #f3f3f3;
 }
 
-
 .event-feed-not-touchscreen .card:hover:not(.card_action_critical),
 .event-feed-not-touchscreen .card:active:not(.card_action_critical) {
   box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
 }
-
 
 .event-feed-not-touchscreen .card:hover .card__close-btn,
 .event-feed-not-touchscreen .card:active .card__close-btn,

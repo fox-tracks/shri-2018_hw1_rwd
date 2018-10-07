@@ -25,10 +25,11 @@
       grid-template-columns: repeat(6, 1fr);
       grid-auto-flow: dense;
     }
-    
+
     &__card {
       margin-bottom: 0;
     }
+
     &__card_size_s {
       grid-column: span 3;
       grid-row: span 1;
@@ -59,7 +60,6 @@
       grid-column: span 2;
     }
 
-
     &__card_size_m {
       grid-column: span 3;
     }
@@ -68,7 +68,6 @@
       grid-column: span 4;
       grid-row: span 3;
     }
-
   }
 }
 
