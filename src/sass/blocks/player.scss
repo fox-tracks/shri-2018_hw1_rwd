@@ -6,9 +6,10 @@
   grid-column-gap: 15px;
   grid-template-rows: 20px 20px 1fr;
   grid-row-gap: 12px;
-  grid-template-areas: "im an an an an"
-                        "im tb tb tb tl"
-                        "bb nb vb vb vv";
+  grid-template-areas:
+    "im an an an an"
+    "im tb tb tb tl"
+    "bb nb vb vb vv";
 
   &__track-name {
     color: $black;
@@ -93,7 +94,6 @@
 
   &__back-btn {
     grid-area: bb;
-
   }
 
   &__next-btn {

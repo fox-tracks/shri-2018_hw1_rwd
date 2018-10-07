@@ -13,12 +13,12 @@
   background-size: 150%;
 
   @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-         only screen and (min-resolution: 144dpi) {
+    only screen and (min-resolution: 144dpi) {
     background-image: url("../img/BitMap@2x.png");
   }
 
   @media only screen and (-webkit-min-device-pixel-ratio: 3),
-  only screen and (min-resolution: 288dpi) {
+    only screen and (min-resolution: 288dpi) {
     background-image: url("../img/BitMap@3x.png");
   }
 

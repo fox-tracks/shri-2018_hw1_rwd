@@ -6,7 +6,7 @@
 
   &:active {
     background-color: #f3f3f3;
-    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
   }
 
   &_action_critical {
@@ -15,8 +15,8 @@
   }
 
   &_action_critical:active {
-    background-color: $critical-color;;
-    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    background-color: $critical-color;
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
   }
 
   &_icon_stats {
@@ -146,7 +146,7 @@
   }
 
   &__widget {
-    margin-top: 25px;
+    margin-top: 20px;
   }
 
   &__info {
@@ -170,10 +170,6 @@
     border-radius: 18px;
     background-color: $card-color;
     padding: 0 35px 16px 16px;
-  }
-
-  &__widget {
-    margin-top: 20px;
   }
 }
 
