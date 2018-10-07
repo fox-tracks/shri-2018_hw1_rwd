@@ -1,7 +1,8 @@
 # Описание реализации ДЗ - "Адаптивная верстка".
 
 Сборка на `gulp`.
-Страница на [GitHub pages](!!!!!!!!!!!)
+
+Страница на [GitHub pages](https://fox-tracks.github.io/shri-2018_hw1_rwd/dist)
 
 -----------------
 
