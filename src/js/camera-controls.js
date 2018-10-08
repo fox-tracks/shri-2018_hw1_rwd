@@ -3,8 +3,12 @@
 function initCameraGesture(){
 
   const camera = document.querySelector('.camera');
+  const zoomValueContainer = document.querySelector('.camera__zoom-value');
+
   let cameraWidth = camera.getBoundingClientRect().width;
-  let prevBgSize;
+  let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
+  zoomValueContainer.innerHTML = (prevBgSize - 100) + '%';
+
   let gesture = null;
   let evCache = new Array();
   let prevDiff = -1;
@@ -30,7 +34,6 @@ function initCameraGesture(){
 
     if (evCache.length === 2) {
       prevDiff = (Math.abs(evCache[0].startX - evCache[1].startX)) * 100 / cameraWidth;
-      prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
     }
   }
 
@@ -48,7 +51,13 @@ function initCameraGesture(){
       let currentBgSize;
       if (prevDiff > 0) {
         increase = curDiff - prevDiff;
-        currentBgSize = prevBgSize + increase;
+
+        if((prevBgSize + increase) < 135) {
+          currentBgSize = 135;
+        } else {
+          currentBgSize = prevBgSize + increase;
+        }
+
         camera.style.backgroundSize = currentBgSize + '%';
 
         if (curDiff > prevDiff) {
@@ -81,9 +90,11 @@ function initCameraGesture(){
     remove_event(ev);
     ev.target.style.border = "2px solid blue";
 
-    if (evCache.length === 2) {
+    if (evCache.length < 2) {
       prevDiff = -1;
       prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
+      console.log(prevBgSize);
+      zoomValueContainer.innerHTML = Math.round(prevBgSize - 100) + '%';
     }
   }
 }
