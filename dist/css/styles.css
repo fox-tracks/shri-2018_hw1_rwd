@@ -727,11 +727,6 @@ input::-moz-focus-inner {
 .event-feed-not-touchscreen .card:active:not(.card_action_critical) .card__extra-content {
   background-color: #f3f3f3; }
 
-.event-feed-not-touchscreen .card:hover:not(.card_action_critical),
-.event-feed-not-touchscreen .card:active:not(.card_action_critical) {
-  -webkit-box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
-          box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5); }
-
 .event-feed-not-touchscreen .card:hover .card__close-btn,
 .event-feed-not-touchscreen .card:active .card__close-btn,
 .event-feed-not-touchscreen .card:hover .card__open-btn,
@@ -748,6 +743,11 @@ input::-moz-focus-inner {
 .event-feed-not-touchscreen .card__wrapper,
 .event-feed-not-touchscreen .card__extra-content {
   padding-right: 16px; }
+
+.event-feed-not-touchscreen .card:hover:not(.card_action_critical),
+.event-feed-not-touchscreen .card:active:not(.card_action_critical) {
+  -webkit-box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
+          box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5); }
 
 .event-feed-not-touchscreen .card_action_critical:hover .card__close-btn,
 .event-feed-not-touchscreen .card_action_critical:active .card__close-btn {
@@ -861,7 +861,7 @@ input::-moz-focus-inner {
     color: #333;
     padding-top: 16px; }
   .card__widget {
-    margin-top: 25px; }
+    margin-top: 20px; }
   .card__info {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -880,8 +880,6 @@ input::-moz-focus-inner {
     border-radius: 18px;
     background-color: #fafafa;
     padding: 0 35px 16px 16px; }
-  .card__widget {
-    margin-top: 20px; }
 
 @media only screen and (min-width: 680px) {
   .card {
@@ -977,7 +975,7 @@ input::-moz-focus-inner {
       -ms-grid-rows: 20px 12px 20px 12px 1fr;
       grid-template-rows: 20px 20px 1fr;
   grid-row-gap: 12px;
-      grid-template-areas: "im an an an an" "im tb tb tb tl" "bb nb vb vb vv"; }
+      grid-template-areas: "im an an an an" "im tb tb tb tl" "bb nb vb vb vv"; }
   .player__track-name {
     color: #000; }
   .player__album-cover {
@@ -1161,7 +1159,7 @@ input::-moz-focus-inner {
   background-position-x: 0;
   background-position-y: center;
   background-repeat: no-repeat;
-  background-size: 150%; }
+  background-size: 100%; }
   @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-resolution: 144dpi) {
     .camera {
       background-image: url("../img/BitMap@2x.png"); } }
