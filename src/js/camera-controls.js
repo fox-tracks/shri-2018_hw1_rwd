@@ -54,6 +54,18 @@ function initCameraGesture(){
     return angleDeg;
   }
 
+  function applyLimit (value, lowLimit, hightLimit) {
+    if(value <= lowLimit) {
+      return lowLimit;
+    }
+
+    if(value >= hightLimit) {
+      return hightLimit;
+    }
+
+    return value;
+  }
+
   function processRotate (rotateCache) {
     if(rotateCache.length !== 2) {
       initAngle = undefined;
@@ -70,9 +82,11 @@ function initCameraGesture(){
       initBrightness = curBrightness;
     } else {
       const difAngle = angle - initAngle;
-      const newBrightnes = initBrightness + difAngle;
+      const newBrightness = initBrightness + difAngle;
 
-      setcurBrightness(newBrightnes);
+      const limitedNewBrightness = applyLimit(newBrightness, 0, 200);
+
+      setcurBrightness(limitedNewBrightness);
     }
 
   }

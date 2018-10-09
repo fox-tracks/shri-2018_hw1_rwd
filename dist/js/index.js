@@ -9,7 +9,6 @@ function initCameraGesture(){
   const brightValue = document.querySelector('.camera__brightness-value');
   const scroll = document.querySelector('.camera__scroll');
   const cameraWidth = camera.getBoundingClientRect().width;
-  const cameraHeight = camera.getBoundingClientRect().height;
 
   let curBrightness = 50;
   let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
@@ -55,9 +54,19 @@ function initCameraGesture(){
     return angleDeg;
   }
 
+  function applyLimit (value, lowLimit, hightLimit) {
+    if(value <= lowLimit) {
+      return lowLimit;
+    }
+
+    if(value >= hightLimit) {
+      return hightLimit;
+    }
+
+    return value;
+  }
+
   function processRotate (rotateCache) {
-
-
     if(rotateCache.length !== 2) {
       initAngle = undefined;
       initBrightness = undefined;
@@ -68,15 +77,16 @@ function initCameraGesture(){
     const [ ev1, ev2 ] = rotateCache;
     const angle = getAngle(ev1, ev2);
 
-
     if(initAngle === undefined) {
       initAngle = angle;
       initBrightness = curBrightness;
     } else {
       const difAngle = angle - initAngle;
-      const newBrightnes = initBrightness + difAngle;
+      const newBrightness = initBrightness + difAngle;
 
-      setcurBrightness(newBrightnes);
+      const limitedNewBrightness = applyLimit(newBrightness, 0, 200);
+
+      setcurBrightness(limitedNewBrightness);
     }
 
   }
@@ -98,12 +108,8 @@ function initCameraGesture(){
     // записываем в массив эвентов
     evCache.push(gesture);
 
-
     if (evCache.length === 2) {
       prevDiff.x = (evCache[1].startX - evCache[0].startX);
-
-      const initAngle = getAngle(evCache[1], evCache[0]);
-      // console.log(initAngle);
     }
 
   }
@@ -117,8 +123,6 @@ function initCameraGesture(){
     }
 
     processRotate(rotateCache);
-
-
 
     if (evCache.length === 2) {
       for (let i = 0; i < evCache.length; i++) {
