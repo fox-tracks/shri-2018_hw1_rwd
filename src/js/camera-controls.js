@@ -9,8 +9,8 @@ function initCameraGesture(){
   const brightValue = document.querySelector('.camera__brightness-value');
   const scroll = document.querySelector('.camera__scroll');
   const cameraWidth = camera.getBoundingClientRect().width;
-  const cameraHeight = camera.getBoundingClientRect().height;
 
+  let curBrightness = 50;
   let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
   let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
   let prevBgPositionY = + (((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
@@ -22,6 +22,7 @@ function initCameraGesture(){
     y: 0
   };
   let initAngle;
+  let initBrightness;
 
   camera.style.touchAction = 'none';
   camera.setAttribute('touch-action', 'none');
@@ -34,31 +35,45 @@ function initCameraGesture(){
   camera.addEventListener('pointerleave', pointerupHandler);
 
 
+
+  function setcurBrightness (value) {
+    curBrightness = value;
+
+    const curBrightnessDisplayValue = Math.round(value) + '%';
+
+    brightValue.innerHTML = curBrightnessDisplayValue;
+    camera.style.filter = 'brightness(' +  curBrightnessDisplayValue + ')';
+  }
+
   function getAngle (ev1, ev2) {
-    console.log(ev1);
     let diffX= (ev1.x - ev2.x);
     let diffY = (ev1.y - ev2.y);
-
     let angleRad = Math.atan2(diffY, diffX);
     let angleDeg = (angleRad * (180 / Math.PI));
 
-    // console.log(angleDeg);
     return angleDeg;
   }
 
   function processRotate (rotateCache) {
     if(rotateCache.length !== 2) {
+      initAngle = undefined;
+      initBrightness = undefined;
       return;
+
     }
 
     const [ ev1, ev2 ] = rotateCache;
     const angle = getAngle(ev1, ev2);
 
-    // console.log(angle);
+    if(initAngle === undefined) {
+      initAngle = angle;
+      initBrightness = curBrightness;
+    } else {
+      const difAngle = angle - initAngle;
+      const newBrightnes = initBrightness + difAngle;
 
-    // if(initAngle !== undefined) {
-    //
-    // }
+      setcurBrightness(newBrightnes);
+    }
 
   }
 
@@ -79,12 +94,8 @@ function initCameraGesture(){
     // записываем в массив эвентов
     evCache.push(gesture);
 
-
     if (evCache.length === 2) {
       prevDiff.x = (evCache[1].startX - evCache[0].startX);
-
-      const initAngle = getAngle(evCache[1], evCache[0]);
-      // console.log(initAngle);
     }
 
   }
@@ -98,8 +109,6 @@ function initCameraGesture(){
     }
 
     processRotate(rotateCache);
-
-
 
     if (evCache.length === 2) {
       for (let i = 0; i < evCache.length; i++) {
