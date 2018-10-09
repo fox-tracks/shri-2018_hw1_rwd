@@ -1165,7 +1165,9 @@ input::-moz-focus-inner {
   background-position-x: 0;
   background-position-y: 50%;
   background-repeat: no-repeat;
-  background-size: 178%; }
+  background-size: 178%;
+  -webkit-filter: brightness(100%);
+          filter: brightness(100%); }
   @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-resolution: 144dpi) {
     .camera {
       background-image: url("../img/BitMap@2x.png"); } }
