@@ -19,14 +19,14 @@ function initCameraGesture(){
   camera.style.touchAction = 'none';
   camera.setAttribute('touch-action', 'none');
 
-  camera.onpointerdown = pointerdown_handler;
-  camera.onpointermove = pointermove_handler;
-  camera.onpointerup = pointerup_handler;
-  camera.onpointercancel = pointerup_handler;
-  camera.onpointerout = pointerup_handler;
-  camera.onpointerleave = pointerup_handler;
+  camera.addEventListener('pointerdown', pointerdownHandler);
+  camera.addEventListener('pointermove', pointermoveHandler);
+  camera.addEventListener('pointerup', pointerupHandler);
+  camera.addEventListener('pointercancel', pointerupHandler);
+  camera.addEventListener('pointerout', pointerupHandler);
+  camera.addEventListener('pointerleave', pointerupHandler);
 
-  function pointerdown_handler(ev) {
+  function pointerdownHandler(ev) {
     camera.setPointerCapture(ev.pointerId);
 
     // формируем жест
@@ -48,7 +48,7 @@ function initCameraGesture(){
     }
   }
 
-  function pointermove_handler(ev) {
+  function pointermoveHandler(ev) {
     if (evCache.length === 2) {
       for (let i = 0; i < evCache.length; i++) {
         if (ev.pointerId === evCache[i].id) {
@@ -116,7 +116,7 @@ function initCameraGesture(){
     }
   }
 
-  function pointerup_handler(ev) {
+  function pointerupHandler(ev) {
     remove_event(ev);
 
     if (evCache.length < 2) {

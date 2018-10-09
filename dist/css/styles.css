@@ -826,13 +826,7 @@ input::-moz-focus-inner {
     height: 17px;
     position: absolute;
     background-repeat: no-repeat;
-    background-position: center;
-    -ms-touch-action: none;
-        touch-action: none;
-    -moz-user-select: none;
-     -ms-user-select: none;
-         user-select: none;
-    -webkit-user-select: none; }
+    background-position: center; }
   .card__close-btn {
     top: 15px;
     right: 15px;
