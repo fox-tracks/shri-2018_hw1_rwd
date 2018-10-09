@@ -1,22 +1,22 @@
 'use strict';
 
 function initCameraGesture(){
+  const PERCENTAGE_COEF = 100;
+  const BG_SIZE_COVER_VALUE = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
   const camera = document.querySelector('.camera');
   const zoomValueContainer = document.querySelector('.camera__zoom-value');
   const scroll = document.querySelector('.camera__scroll');
-
-  camera.style.touchAction = 'none';
-  camera.style.backgroundPositionX = '0px';
   const cameraWidth = camera.getBoundingClientRect().width;
+
   let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
-
-
-  let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]);
-
+  let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
   let gesture = null;
   let evCache = new Array();
-  let prevDiff = -1;
+  let prevDiff;
+  let prevDiffAbs= -1;
+
+  camera.style.touchAction = 'none';
 
   camera.onpointerdown = pointerdown_handler;
   camera.onpointermove = pointermove_handler;
@@ -39,7 +39,11 @@ function initCameraGesture(){
     evCache.push(gesture);
 
     if (evCache.length === 2) {
-      prevDiff = (Math.abs(evCache[0].startX - evCache[1].startX)) * 100 / cameraWidth;
+      console.log(evCache[1].startX,  evCache[0].startX);
+
+
+
+      prevDiffAbs = (Math.abs(evCache[1].startX - evCache[0].startX)) / cameraWidth;
     }
   }
 
@@ -52,14 +56,14 @@ function initCameraGesture(){
         }
       }
 
-      const curDiff = (Math.abs(evCache[0].startX - evCache[1].startX)) * 100 / cameraWidth;
+      const curDiffAbs = (Math.abs(evCache[1].startX - evCache[0].startX)) / cameraWidth;
       let increase;
       let currentBgSize;
-      if (prevDiff > 0) {
-        increase = curDiff - prevDiff;
+      if (prevDiffAbs > 0) {
+        increase = (curDiffAbs - prevDiffAbs) * PERCENTAGE_COEF;
 
-        if((prevBgSize + increase) < 135) {
-          currentBgSize = 135;
+        if((prevBgSize + increase) < BG_SIZE_COVER_VALUE) {
+          currentBgSize = BG_SIZE_COVER_VALUE;
         } else {
           currentBgSize = prevBgSize + increase;
         }
@@ -67,7 +71,7 @@ function initCameraGesture(){
         camera.style.backgroundSize = currentBgSize + '%';
       }
 
-      prevDiff = curDiff;
+      prevDiffAbs = curDiffAbs;
       prevBgSize = currentBgSize;
     }
 
@@ -79,7 +83,7 @@ function initCameraGesture(){
       const { startX, startPositionX } = gesture;
       const { x } = ev;
       const difX = x - startX;
-      const prevBgSizePx = (cameraWidth * prevBgSize) / 100;
+      const prevBgSizePx = (cameraWidth * prevBgSize) / PERCENTAGE_COEF;
       const rate = cameraWidth / (prevBgSizePx - cameraWidth); // коэффициент для расчета положения точки-скролла
 
       // ограничение на левую границу
@@ -115,15 +119,11 @@ function initCameraGesture(){
     remove_event(ev);
 
     if (evCache.length < 2) {
-      prevDiff = -1;
+      prevDiffAbs = -1;
       prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
-      zoomValueContainer.innerHTML = Math.round(prevBgSize - 100) + '%';
+      zoomValueContainer.innerHTML = Math.round(prevBgSize - PERCENTAGE_COEF) + '%';
     }
   }
 }
 
 setTimeout(initCameraGesture, 0);
-
-
-
-

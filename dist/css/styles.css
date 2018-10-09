@@ -764,6 +764,8 @@ input::-moz-focus-inner {
     background-color: #f3f3f3;
     -webkit-box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
             box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5); }
+  .card:active .card__extra-content {
+    background-color: #f3f3f3; }
   .card_action_critical {
     background-color: #db5341;
     color: #fff; }
@@ -824,7 +826,13 @@ input::-moz-focus-inner {
     height: 17px;
     position: absolute;
     background-repeat: no-repeat;
-    background-position: center; }
+    background-position: center;
+    -ms-touch-action: none;
+        touch-action: none;
+    -moz-user-select: none;
+     -ms-user-select: none;
+         user-select: none;
+    -webkit-user-select: none; }
   .card__close-btn {
     top: 15px;
     right: 15px;
@@ -1149,6 +1157,10 @@ input::-moz-focus-inner {
 .camera {
   -ms-touch-action: none;
       touch-action: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
   position: relative;
   width: 100%;
   padding-top: 67%;
@@ -1156,7 +1168,7 @@ input::-moz-focus-inner {
   font-size: 0;
   line-height: 0;
   background-image: url("../img/BitMap@1x.png");
-  background-position-x: right;
+  background-position-x: 0;
   background-position-y: center;
   background-repeat: no-repeat;
   background-size: 178%; }
