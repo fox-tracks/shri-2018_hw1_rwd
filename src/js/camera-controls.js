@@ -1,6 +1,10 @@
 'use strict';
 
 function initCameraGesture(){
+  const cardBtnClose = document.querySelector('.card__close-btn');
+console.log(cardBtnClose);
+
+
   const PERCENTAGE_COEF = 100;
   const BG_SIZE_COVER_VALUE = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
@@ -17,6 +21,7 @@ function initCameraGesture(){
   let prevDiffAbs= -1;
 
   camera.style.touchAction = 'none';
+  camera.setAttribute('touch-action', 'none');
 
   camera.onpointerdown = pointerdown_handler;
   camera.onpointermove = pointermove_handler;
