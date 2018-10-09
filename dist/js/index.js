@@ -1,10 +1,6 @@
 'use strict';
 
 function initCameraGesture(){
-  const cardBtnClose = document.querySelector('.card__close-btn');
-console.log(cardBtnClose);
-
-
   const PERCENTAGE_COEF = 100;
   const BG_SIZE_COVER_VALUE = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
