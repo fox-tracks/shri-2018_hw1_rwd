@@ -13,28 +13,22 @@ function initCameraGesture(){
   const zoomValue = document.querySelector('.camera__zoom-value');
   const brightValue = document.querySelector('.camera__brightness-value');
   const scroll = document.querySelector('.camera__scroll');
+  const scrollWidth = scroll.getBoundingClientRect().width;
   const cameraWidth = camera.getBoundingClientRect().width;
 
   let curBrightness = 50; // начальная яркость в соответствии с макетом
   let curZoom = 178; // начальный зум фона (размер, %) в соответствии с макетом
-  let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
-  let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
-  let prevBgPositionY = + (((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
-  let gesture = null;
-  let evCache = new Array();
+  let curBgPositionX = 0;
+
+
   let commonCache = new Array(); // хранилище эвентов от каждого пальца
-
-
-  let prevDiff = {
-    x: 0,
-    y: 0
-  };
-
 
   let initAngle;
   let initBrightness;
   let initDiffX;
   let initZoom;
+  let initX;
+  let initPositionX;
 
   camera.style.touchAction = 'none';
   camera.setAttribute('touch-action', 'none');
@@ -68,14 +62,26 @@ function initCameraGesture(){
     camera.style.backgroundSize = value + '%';
   }
 
+  function setScroollPointPosition (value) {
+    scroll.style.left = value + 'px';
+
+
+  }
+
+  // устанавливает текушее положение фона
+  function setCurrentPositionX(value) {
+    curBgPositionX = value;
+
+    camera.style.backgroundPositionX = value + 'px';
+  }
+
   // рассчитывает угол по координатам евентов
   function getAngle (ev1, ev2) {
     let diffX= (ev1.x - ev2.x);
     let diffY = (ev1.y - ev2.y);
     let angleRad = Math.atan2(diffY, diffX);
-    let angleDeg = (angleRad * (180 / Math.PI));
 
-    return angleDeg;
+    return (angleRad * (180 / Math.PI));
   }
 
   // рассчитывает разницу по Х координатам евентов
@@ -96,7 +102,20 @@ function initCameraGesture(){
     return value;
   }
 
-  // функция поворота
+  // определяет позицию скролла
+  function getScrollPosition (value, lowerLimit, upperLimit) {
+    if(value <= lowerLimit) {
+      return cameraWidth - scrollWidth;
+    }
+
+    if(value >= upperLimit) {
+      return upperLimit;
+    }
+
+    return cameraWidth * (value / lowerLimit);
+  }
+
+  // функция кручение
   function processRotate (commonCache) {
     if(commonCache.length !== 2) {
       initAngle = undefined;
@@ -145,29 +164,35 @@ function initCameraGesture(){
     }
   }
 
+  // функция перемещения по X
+  function processTurn (commonCache) {
+    if(commonCache.length >= 2) {
+      return;
+    }
+    const [ ev1 ]  = commonCache;
+    if(initX === undefined) {
+      initX = ev1.x;
+      initPositionX = curBgPositionX;
+    } else {
+      const changeX = ev1.x - initX;
+      const newPositionX = initPositionX + changeX;
+      const lowerLimit = cameraWidth - (curZoom * cameraWidth) / PERCENTAGE_COEF;
+      const upperLimit = 0;
+      const limitedNewPositionX  = applyLimit(newPositionX, lowerLimit, upperLimit);
+
+      setCurrentPositionX(limitedNewPositionX);
+
+      const scrollPosition = getScrollPosition(newPositionX, lowerLimit, upperLimit);
+
+      setScroollPointPosition(scrollPosition);
+    }
+  }
 
   // хэндлер нажатия
   function pointerdownHandler(ev) {
     camera.setPointerCapture(ev.pointerId);
 
     commonCache.push(ev);
-
-    // формируем жест
-    gesture = {
-      id: ev.pointerId,
-      startX: ev.x,
-      startY: ev.y,
-      startPositionX: prevBgPositionX,
-      startPositionY: prevBgPositionY
-    };
-
-    // записываем в массив эвентов
-    evCache.push(gesture);
-
-    if (evCache.length === 2) {
-      prevDiff.x = (evCache[1].startX - evCache[0].startX);
-    }
-
   }
 
   // хэндлер движения
@@ -181,47 +206,10 @@ function initCameraGesture(){
 
     processRotate(commonCache);
     processZoom(commonCache);
-
-    if(evCache.length < 2) {
-      if(!gesture) {
-        return
-      }
-
-      const { startX, startPositionX } = gesture;
-      const { x } = ev;
-      const difX = x - startX;
-      const prevBgSizePx = (cameraWidth * prevBgSize) / PERCENTAGE_COEF;
-      const rate = cameraWidth / (prevBgSizePx - cameraWidth); // коэффициент для расчета положения точки-скролла
-
-      // ограничение на левую границу
-      if((startPositionX + difX) >= 0) {
-        camera.style.backgroundPositionX = '0px';
-        prevBgPositionX = 0;
-        scroll.style.left = 0;
-      }
-      // ограничение на правую границу
-      else if ((startPositionX + difX) < 0 && Math.abs(startPositionX + difX) >= (prevBgSizePx - cameraWidth)) {
-        camera.style.backgroundPositionX = '-' + (prevBgSizePx - cameraWidth).toString() + 'px';
-        prevBgPositionX = - (prevBgSizePx - cameraWidth);
-        scroll.style.left = (cameraWidth - scroll.getBoundingClientRect().width) + 'px';
-      }
-      else {
-        camera.style.backgroundPositionX = startPositionX + difX + 'px';
-        prevBgPositionX = startPositionX + difX;
-        scroll.style.left = Math.abs(startPositionX + difX) * rate + 'px';
-      }
-    }
+    processTurn (commonCache);
   }
 
-  function removeEvent(ev) {
-    for (let i = 0; i < evCache.length; i++) {
-      if (evCache[i].id === ev.pointerId) {
-        evCache.splice(i, 1);
-        break;
-      }
-    }
-  }
-
+  // хэндлер окончание события
   function pointerupHandler(ev) {
     for (let i = 0; i < commonCache.length; i++) {
       if (commonCache[i].pointerId === ev.pointerId) {
@@ -230,12 +218,7 @@ function initCameraGesture(){
       }
     }
 
-    removeEvent(ev);
-
-    if (evCache.length < 2) {
-      prevDiff.x = 0;
-      prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
-    }
+    initX = undefined;
   }
 }
 
