@@ -64,8 +64,6 @@ function initCameraGesture(){
 
   function setScroollPointPosition (value) {
     scroll.style.left = value + 'px';
-
-
   }
 
   // устанавливает текушее положение фона
