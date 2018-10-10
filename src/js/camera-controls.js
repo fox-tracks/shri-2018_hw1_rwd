@@ -151,7 +151,6 @@ function initCameraGesture(){
     camera.setPointerCapture(ev.pointerId);
 
     commonCache.push(ev);
-    console.log('commonCache', commonCache);
 
     // формируем жест
     gesture = {
