@@ -62,7 +62,7 @@ function initCameraGesture(){
     camera.style.backgroundSize = value + '%';
   }
 
-  function setScroollPointPosition (value) {
+  function setScrollPointPosition (value) {
     scroll.style.left = value + 'px';
   }
 
@@ -182,7 +182,7 @@ function initCameraGesture(){
 
       const scrollPosition = getScrollPosition(newPositionX, lowerLimit, upperLimit);
 
-      setScroollPointPosition(scrollPosition);
+      setScrollPointPosition(scrollPosition);
     }
   }
 
