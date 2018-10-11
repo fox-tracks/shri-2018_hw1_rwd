@@ -8,7 +8,7 @@
   border-radius: 20px;
   font-size: 0;
   line-height: 0;
-  background-image: url("../img/BitMap@1x.png");
+  background-image: url("../img/BitMap@1x.jpg");
   background-position-x: 0;
   background-position-y: 50%;
   background-repeat: no-repeat;
@@ -17,12 +17,12 @@
 
   @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
     only screen and (min-resolution: 144dpi) {
-    background-image: url("../img/BitMap@2x.png");
+    background-image: url("../img/BitMap@2x.jpg");
   }
 
   @media only screen and (-webkit-min-device-pixel-ratio: 3),
     only screen and (min-resolution: 288dpi) {
-    background-image: url("../img/BitMap@3x.png");
+    background-image: url("../img/BitMap@3x.jpg");
   }
 
   &__controls {

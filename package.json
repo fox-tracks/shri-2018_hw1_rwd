@@ -5,10 +5,12 @@
   "main": "index.js",
   "author": "Andriyanova",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "npm": "^6.4.1"
+  },
   "devDependencies": {
     "autoprefixer": "^9.1.5",
-    "browser-sync": "^2.24.7",
+    "browser-sync": "^2.26.0",
     "del": "^3.0.0",
     "eslint": "^5.6.1",
     "gulp": "^3.9.1",
