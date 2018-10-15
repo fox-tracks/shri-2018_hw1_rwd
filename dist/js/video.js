@@ -47,6 +47,7 @@
   const popup = document.querySelector('.page__popup');
   const page = document.querySelector('.page');
 
+
   videos.forEach(video => {
     video.addEventListener('click', (e)=> {
       // e.preventDefault();
@@ -54,6 +55,8 @@
       page.style.overflow = 'hidden';
 
       const track = e.target;
+        //.cloneNode(true);
+      console.log(e.parentNode);
 
       const offsetX = Math.floor(((e.pageX * 100) / page.clientWidth) - 50);
       const offsetY = Math.floor(((e.pageY * 100) / page.clientHeight) - 50);
@@ -66,6 +69,13 @@
       }, 0);
 
     });
+  });
+
+  const backBtn = document.querySelector('.popup__back-btn');
+
+  backBtn.addEventListener('click', () => {
+    videos.forEach(video => video.classList.remove('popup__video_full'));
+
   });
 
 })();
