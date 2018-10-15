@@ -43,19 +43,29 @@
   );
 
   //попап
-
-
-  const videosList = document.querySelectorAll('.card__video');
-
-  const videos = Array.from(videosList);
+  const videos = Array.from(document.querySelectorAll('.card__video'));
+  const popup = document.querySelector('.page__popup');
+  const page = document.querySelector('.page');
 
   videos.forEach(video => {
     video.addEventListener('click', (e)=> {
-      const videoContainerParam = e.target.getBoundingClientRect();
-      const center = videoContainerParam.
+      // e.preventDefault();
+      popup.style.display = 'block';
+      page.style.overflow = 'hidden';
 
-      video.classList.add('card__video_active');
-    })
-  })
+      const track = e.target;
+
+      const offsetX = Math.floor(((e.pageX * 100) / page.clientWidth) - 50);
+      const offsetY = Math.floor(((e.pageY * 100) / page.clientHeight) - 50);
+
+      popup.insertBefore(track, popup.firstChild);
+      popup.querySelector('.card__video').style.transform = `translate(${offsetX}%, ${offsetY}%) scale(0.2, 0.2)`;
+
+      setTimeout(function () {
+        track.classList.add('popup__video_full');
+      }, 0);
+
+    });
+  });
 
 })();

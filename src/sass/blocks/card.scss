@@ -199,13 +199,7 @@
     object-fit: cover;
     font-size: 0px;
     line-height: 0px;
-  }
-
-  &__video_active {
-    z-index: 2;
-    transform: translate(50vw, 50vh) scale(3, 3);
-  }
-
+ }
 }
 
 @media only screen and (min-width: 680px) {
