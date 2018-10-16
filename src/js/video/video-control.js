@@ -1,6 +1,5 @@
 'use strict';
 
-
 (function controlVideoStream() {
   const streams = ['sosed', 'cat', 'dog', 'hall'];
 
@@ -43,7 +42,7 @@
   const backBtn = document.querySelector('.popup__back-btn');
   const controls = document.querySelector('.popup__control-wrap');
   const brightnessControl = document.querySelector('.popup__control_brightness');
-  const contrastControl = document.querySelector('.popup__control_control');
+  const contrastControl = document.querySelector('.popup__control_contrast');
 
   videos.forEach(video => {
     video.addEventListener('click', (e) => {
@@ -77,11 +76,11 @@
         controls.classList.add('popup__back-btn_active');
       }, 0);
 
-      popupVideo.style.filter = 'brightness(50%)';
+
     });
   });
 
-
+  // кнопка Все камеры
   backBtn.addEventListener('click', () => {
     popup.querySelector('.card__video').classList.remove('popup__video_full');
     popupVideo.style.transform = transform;
@@ -93,8 +92,15 @@
       popup.style.display = 'none';
       popup.querySelector('.card__video').remove();
     }, 5000);
+  });
 
+  // фильтры
+  brightnessControl.addEventListener('change', (e) => {
+    popupVideo.style.filter = `brightness(${e.target.value}%)`;
+  });
 
+  contrastControl.addEventListener('change', (e) => {
+    popupVideo.style.filter = `contrast(${e.target.value}%)`;
   });
 
 })();
