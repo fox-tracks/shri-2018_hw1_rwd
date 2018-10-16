@@ -1,24 +1,24 @@
 .page {
-  min-height: 100vh;
-  font-weight: 400;
-  color: $black;
-  background-color: rgb(255, 255, 255);
-
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
     min-height: 100vh;
-  }
+    font-weight: 400;
+    color: $black;
+    background-color: rgb(255, 255, 255);
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+    }
 
     &__popup {
-      display: none;
-      position: absolute;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+        display: none;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 }
 

@@ -46,22 +46,22 @@
         <section class="event-feed__wrapper">
             <article class="event-feed__card card card_size_m event-feed__card_size_m card_type_video">
                 <div class="card__wrapper_video">
-                    <video class="card__video card__video_stream-1" controls muted autoplay></video>
+                    <video class="card__video card__video_stream-1" data-key="1" controls muted autoplay></video>
                 </div>
             </article>
             <article class="event-feed__card card card_size_m event-feed__card_size_m card_type_video">
                 <div class="card__wrapper_video">
-                    <video class="card__video card__video_stream-2" controls muted autoplay></video>
+                    <video class="card__video card__video_stream-2" data-key="2" controls muted autoplay></video>
                 </div>
             </article>
             <article class="event-feed__card card card_size_m event-feed__card_size_m card_type_video">
                 <div class="card__wrapper_video">
-                    <video class="card__video card__video_stream-3" controls muted autoplay></video>
+                    <video class="card__video card__video_stream-3" data-key="3" controls muted autoplay></video>
                 </div>
             </article>
             <article class="event-feed__card card card_size_m event-feed__card_size_m card_type_video">
                 <div class="card__wrapper_video">
-                    <video class="card__video card__video_stream-4" controls muted autoplay></video>
+                    <video class="card__video card__video_stream-4" data-key="4" controls muted autoplay></video>
                 </div>
             </article>
 
@@ -95,6 +95,18 @@
     </footer>
     <div class="page__popup popup">
         <button class="popup__back-btn">Все камеры</button>
+        <div class="popup__control-wrap popup__control-wrap_brightness">
+            <p class="popup__control-title">Яркость</p>
+            <input type="range" min="0" max="100" step="1" value="50" id="popup__control_brightness" class="popup__control popup__control_brightness">
+            <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_min">0</label>
+            <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_max">100</label>
+        </div>
+        <div class="popup__control-wrap popup__control-wrap_contrast">
+            <p class="popup__control-title">Контраст</p>
+            <input type="range" min="0" max="100" step="1" value="50" id="popup__control_contrast" class="popup__control popup__control_contrast">
+            <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_min">0</label>
+            <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_max">100</label>
+        </div>
     </div>
 </div>
 <script src="js/video.js"></script>

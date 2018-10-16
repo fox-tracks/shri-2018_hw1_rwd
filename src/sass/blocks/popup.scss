@@ -19,6 +19,22 @@
         top: 74px;
         left: 50%;
         transform: translate(-50%);
+        opacity: 0;
+        transition: opacity 10s;
+    }
+
+    &__control-wrap {
+        position: absolute;
+        top: 74px;
+
+    }
+
+    &__control-wrap_brightness {
+        left: 0;
+    }
+
+    &__control-wrap_contrast {
+        right: 0;
     }
 }
 
@@ -31,11 +47,18 @@
 }
 
 .popup .card__video {
-    transition: transform 2s;
+    opacity: 0;
+    transition: transform 5s, opacity 2s;
     will-change: transform;
 }
 
 .popup .popup__video_full {
     transform: translate(0, 0) scale(1) !important;
+    opacity: 1;
     will-change: transform;
+}
+
+.popup .popup__back-btn_active,
+.popup .popup__control-wrap {
+    opacity: 1;
 }
