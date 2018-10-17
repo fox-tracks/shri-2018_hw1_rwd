@@ -33,7 +33,7 @@
     initVideo(video, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${streamItem}%2Fmaster.m3u8`);
   });
 
-  function analizeAudio (elem) {
+  function analyzeAudio(elem) {
     const context = new (window.AudioContext || window.webkitAudioContext)();
     if (AudioContext) {
       // ...
@@ -45,18 +45,19 @@
     const analyserNode = new AnalyserNode(context, {
       fftSize: 256,
       maxDecibels: -25,
-      minDecibels: -60,
-      smoothingTimeConstant: 0.5,
+      minDecibels: -100,
+      smoothingTimeConstant: 0.8,
     });
 
 
     source.connect(analyserNode);
     analyserNode.connect(destination);
-    // setInterval(() => {
+    setInterval(() => {
       const frequencies = analyserNode.frequencyBinCount;
-      const myDataArray = new Float32Array(frequencies);
+      const myDataArray = new Uint8Array(frequencies);
+      analyserNode.getByteFrequencyData(myDataArray);
       console.log(myDataArray);
-    // }, 1000);
+    }, 1000);
 
 
   }
@@ -99,7 +100,7 @@
         track.classList.add('popup__video_full');
         popupVideo.volume = 0.5;
         popupVideo.muted = false;
-        analizeAudio(popupVideo);
+        analyzeAudio(popupVideo);
 
       }, 0);
 
