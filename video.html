@@ -94,18 +94,23 @@
         </div>
     </footer>
     <div class="page__popup popup">
+        <canvas id="popup__canvas" width="100%" height="100%"></canvas>
         <button class="popup__back-btn">Все камеры</button>
         <div class="popup__control-wrap popup__control-wrap_brightness">
             <p class="popup__control-title">Яркость</p>
-            <input type="range" min="0" max="200" step="2" value="100" id="popup__control_brightness" class="popup__control popup__control_brightness">
-            <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_min">0</label>
-            <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_max">200</label>
+            <div class="popup__control-range">
+                <input type="range" min="0" max="200" step="2" value="100" id="popup__control_brightness" class="popup__control popup__control_brightness">
+                <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_min">0</label>
+                <label for="popup__control_brightness" class="popup__label popup__label_brightness popup__label_max">200</label>
+            </div>
         </div>
         <div class="popup__control-wrap popup__control-wrap_contrast">
             <p class="popup__control-title">Контраст</p>
-            <input type="range" min="0" max="200" step="1" value="50" id="popup__control_contrast" class="popup__control popup__control_contrast">
-            <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_min">0</label>
-            <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_max">200</label>
+            <div class="popup__control-range">
+                <input type="range" min="0" max="200" step="1" value="50" id="popup__control_contrast" class="popup__control popup__control_contrast">
+                <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_min">0</label>
+                <label for="popup__control_contrast" class="popup__label popup__label_contrast popup__label_max">200</label>
+            </div>
         </div>
     </div>
 </div>

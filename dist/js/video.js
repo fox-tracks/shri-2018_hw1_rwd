@@ -33,6 +33,33 @@
     initVideo(video, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${streamItem}%2Fmaster.m3u8`);
   });
 
+  function analizeAudio (elem) {
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    if (AudioContext) {
+      // ...
+    } else {
+      alert('Ваш браузер не поддерживает Web Audio API');
+    }
+    const source = context.createMediaElementSource(elem);
+    const destination = context.destination;
+    const analyserNode = new AnalyserNode(context, {
+      fftSize: 256,
+      maxDecibels: -25,
+      minDecibels: -60,
+      smoothingTimeConstant: 0.5,
+    });
+
+
+    source.connect(analyserNode);
+    analyserNode.connect(destination);
+    // setInterval(() => {
+      const frequencies = analyserNode.frequencyBinCount;
+      const myDataArray = new Float32Array(frequencies);
+      console.log(myDataArray);
+    // }, 1000);
+
+
+  }
 
   //попап
   let transform;
@@ -64,29 +91,35 @@
 
       initVideo(popupVideo, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${newStreamItem}%2Fmaster.m3u8`);
 
-      popupVideo.style.transform = `translate(${offsetX}%, ${offsetY}%) scale(${rate})`;
       transform = `translate(${offsetX}%, ${offsetY}%) scale(${rate})`;
+      popupVideo.style.transform = transform;
 
-      setTimeout(function () {
+
+      setTimeout(() => {
         track.classList.add('popup__video_full');
+        popupVideo.volume = 0.5;
+        popupVideo.muted = false;
+        analizeAudio(popupVideo);
+
       }, 0);
 
-      setTimeout(function () {
+      setTimeout(() => {
         backBtn.classList.add('popup__back-btn_active');
-        controls.classList.add('popup__back-btn_active');
+        controls.classList.add('popup__controls_active');
       }, 0);
-
-
     });
   });
 
-
+  // кнопка Все камеры
   backBtn.addEventListener('click', () => {
     popup.querySelector('.card__video').classList.remove('popup__video_full');
+    backBtn.classList.remove('popup__back-btn_active');
+    controls.classList.remove('popup__controls_active');
     popupVideo.style.transform = transform;
     videos.forEach(video => {
       video.play();
     });
+
 
     setTimeout(function () {
       popup.style.display = 'none';
@@ -94,12 +127,14 @@
     }, 5000);
   });
 
+  // фильтры
   brightnessControl.addEventListener('change', (e) => {
     popupVideo.style.filter = `brightness(${e.target.value}%)`;
-  })
+  });
 
   contrastControl.addEventListener('change', (e) => {
     popupVideo.style.filter = `contrast(${e.target.value}%)`;
-  })
+  });
 
+  //датчик движения
 })();
