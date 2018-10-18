@@ -33,6 +33,11 @@
     initVideo(video, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${streamItem}%2Fmaster.m3u8`);
   });
 
+  function average(arr) {
+    return arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
+  }
+
   function analyzeAudio(elem) {
     const volume = document.querySelector('.popup__volume');
 
@@ -45,7 +50,7 @@
     const source = context.createMediaElementSource(elem);
     const destination = context.destination;
     const analyserNode = new AnalyserNode(context, {
-      fftSize: 256,
+      fftSize: 64,
       maxDecibels: -25,
       minDecibels: -100,
       smoothingTimeConstant: 0.8,
@@ -58,8 +63,10 @@
       const frequencies = analyserNode.frequencyBinCount;
       const myDataArray = new Uint8Array(frequencies);
       analyserNode.getByteFrequencyData(myDataArray);
-      const max = Math.max(...myDataArray);
-      console.log(max);
+
+
+      const max = average(myDataArray) / 255;
+      // console.log(myDataArray);
 
 
       volume.style.transform = `scaleY(${max})`;

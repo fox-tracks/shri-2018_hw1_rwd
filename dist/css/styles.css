@@ -1005,7 +1005,7 @@ input::-moz-focus-inner {
       -ms-grid-rows: 20px 12px 20px 12px 1fr;
       grid-template-rows: 20px 20px 1fr;
   grid-row-gap: 12px;
-      grid-template-areas: "im an an an an" "im tb tb tb tl" "bb nb vb vb vv"; }
+      grid-template-areas: "im an an an an" "im tb tb tb tl" "bb nb vb vb vv"; }
   .player__track-name {
     color: #000; }
   .player__album-cover {
@@ -1365,17 +1365,7 @@ input::-moz-focus-inner {
     left: 65px;
     padding: 10px;
     width: 100px;
-    height: 270px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center; }
+    height: 270px; }
   .popup__control-range {
     position: relative;
     width: 90%;
@@ -1408,9 +1398,13 @@ input::-moz-focus-inner {
       right: 10px; }
   .popup__volume {
     width: 40px;
-    height: 1px;
+    height: 100%;
     background-color: red;
-    margin-top: auto; }
+    -webkit-transform-origin: left bottom;
+        -ms-transform-origin: left bottom;
+            transform-origin: left bottom;
+    position: absolute;
+    bottom: 0; }
 
 @media (min-width: 750px) {
   .popup__back-btn, .popup__control-wrap_volume {
