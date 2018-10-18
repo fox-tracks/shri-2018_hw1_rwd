@@ -1,6 +1,7 @@
 .popup {
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     font-size: 0.7rem;
     font-weight: bold;
     line-height: 1.2rem;
@@ -28,7 +29,7 @@
         left: 50%;
         transform: translate(-50%);
         opacity: 0;
-        transition: opacity 10s;
+        transition: opacity 5s;
     }
 
     &__control-wrap {
@@ -42,6 +43,8 @@
         transform: translateX(-50%);
         display: flex;
         align-items: center;
+        opacity: 0;
+        transition: opacity 5s;
     }
 
     &__control-title {
@@ -50,12 +53,24 @@
         min-width: 70px;
     }
 
+
     &__control-wrap_brightness {
         bottom: 40px;
     }
 
     &__control-wrap_contrast {
         bottom: 100px;
+    }
+
+    &__control-wrap_volume {
+        top: 84px;
+        left: 65px;
+        padding: 10px;
+        width: 100px;
+        height: 270px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     &__control-range {
@@ -101,19 +116,30 @@
         }
     }
 
+    &__volume {
+        width: 40px;
+        height: 1px;
+        background-color: red;
+        margin-top: auto;
+    }
+
 
 }
 
 @media (min-width: 750px) {
     .popup {
-        &__back-btn {
-            top: 84px;
+        &__back-btn,
+        &__control-wrap_volume{
+            top: 102px;
         }
     }
 }
 
 .popup .card__video {
+    width: 100%;
+    height: 100%;
     opacity: 0;
+    //transform-origin: 0 0;
     transition: transform 5s, opacity 5s ease;
     will-change: transform;
 }
@@ -125,7 +151,7 @@
 }
 
 .popup .popup__back-btn_active,
-.popup .popup__control-wrap {
+.popup .popup__control-wrap_active {
     opacity: 1;
     will-change: transform;
 }

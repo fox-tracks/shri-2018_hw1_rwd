@@ -26,7 +26,7 @@
     return streams[key - 1];
   }
 
-  const videos = Array.from(document.querySelectorAll('.card__video'));
+  const videos = Array.from(document.querySelectorAll('main .card__video'));
 
   videos.forEach(video => {
     const streamItem = selectStream(video);
@@ -34,6 +34,8 @@
   });
 
   function analyzeAudio(elem) {
+    const volume = document.querySelector('.popup__volume');
+
     const context = new (window.AudioContext || window.webkitAudioContext)();
     if (AudioContext) {
       // ...
@@ -56,8 +58,12 @@
       const frequencies = analyserNode.frequencyBinCount;
       const myDataArray = new Uint8Array(frequencies);
       analyserNode.getByteFrequencyData(myDataArray);
-      console.log(myDataArray);
-    }, 1000);
+      const max = Math.max(...myDataArray);
+      console.log(max);
+
+
+      volume.style.transform = `scaleY(${max})`;
+    }, 200);
 
 
   }
@@ -68,7 +74,7 @@
   const popup = document.querySelector('.page__popup');
   const page = document.querySelector('.page');
   const backBtn = document.querySelector('.popup__back-btn');
-  const controls = document.querySelector('.popup__control-wrap');
+  const controls = document.querySelectorAll('.popup__control-wrap');
   const brightnessControl = document.querySelector('.popup__control_brightness');
   const contrastControl = document.querySelector('.popup__control_contrast');
 
@@ -78,35 +84,34 @@
         video.pause();
       });
 
-      popup.style.display = 'block';
-      page.style.overflow = 'hidden';
-
-      const track = e.target.cloneNode(true);
       const offsetX = Math.floor(((e.pageX * 100) / page.clientWidth) - 50);
       const offsetY = Math.floor(((e.pageY * 100) / page.clientHeight) - 50);
       const rate = e.target.getBoundingClientRect().height / page.clientHeight;
-      const newStreamItem = selectStream(e.target);
 
-      popup.insertBefore(track, popup.firstChild);
+
       popupVideo = popup.querySelector('.card__video');
-
-      initVideo(popupVideo, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${newStreamItem}%2Fmaster.m3u8`);
-
       transform = `translate(${offsetX}%, ${offsetY}%) scale(${rate})`;
       popupVideo.style.transform = transform;
 
+      popup.style.display = 'block';
+      page.style.overflow = 'hidden';
+
+      popupVideo.style.transform = transform;
+
+      const newStreamItem = selectStream(e.target);
+      initVideo(popupVideo, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${newStreamItem}%2Fmaster.m3u8`);
 
       setTimeout(() => {
-        track.classList.add('popup__video_full');
-        popupVideo.volume = 0.5;
+        popupVideo.classList.add('popup__video_full');
         popupVideo.muted = false;
         analyzeAudio(popupVideo);
-
       }, 0);
 
       setTimeout(() => {
         backBtn.classList.add('popup__back-btn_active');
-        controls.classList.add('popup__controls_active');
+        controls.forEach(control => {
+          control.classList.add('popup__control-wrap_active');
+        });
       }, 0);
     });
   });
@@ -114,8 +119,11 @@
   // кнопка Все камеры
   backBtn.addEventListener('click', () => {
     popup.querySelector('.card__video').classList.remove('popup__video_full');
+    page.style.overflow = 'auto';
     backBtn.classList.remove('popup__back-btn_active');
-    controls.classList.remove('popup__controls_active');
+    controls.forEach(control => {
+      control.classList.remove('popup__control-wrap_active');
+    });
     popupVideo.style.transform = transform;
     videos.forEach(video => {
       video.play();
@@ -124,7 +132,7 @@
 
     setTimeout(function () {
       popup.style.display = 'none';
-      popup.querySelector('.card__video').remove();
+      popupVideo.setAttribute('src', '');
     }, 5000);
   });
 
