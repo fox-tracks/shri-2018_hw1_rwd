@@ -3,7 +3,6 @@
 (function controlVideoStream() {
   const streams = ['sosed', 'cat', 'dog', 'hall'];
 
-
   // инициализация видео
   function initVideo(video, url) {
     if (Hls.isSupported()) {
@@ -52,6 +51,7 @@
     window.analyserNode.connect(window.context.destination);
   }
 
+  // получение среднего значения громкости
   function getVolume(analyserNode) {
     const frequencies = analyserNode.frequencyBinCount;
     const myDataArray = new Uint8Array(frequencies);
@@ -60,8 +60,7 @@
     return average(myDataArray) / 128;
   }
 
-
-  // инитим потоки  каждый тег video
+  // инитим потоки в каждый тег video
   const videos = Array.from(document.querySelectorAll('main .card__video'));
 
   videos.forEach(video => {
@@ -101,6 +100,7 @@
 
       popupVideo.style.transform = transform;
 
+      // инитим поток
       const newStreamItem = selectStream(e.target);
       initVideo(popupVideo, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${newStreamItem}%2Fmaster.m3u8`);
 
@@ -112,6 +112,7 @@
           createAnalyser(popupVideo);
         }
 
+        // функция обновления высоты столбика громкости
         const updateVolumeBar = () => {
           const averageVolume = getVolume(window.analyserNode);
           volume.style.transform = `scaleY(${averageVolume})`;
@@ -145,11 +146,11 @@
     setTimeout(function () {
       popup.style.display = 'none';
       popupVideo.setAttribute('src', '');
-      clearInterval(intervalId);
+      clearInterval(intervalId); // удаляем обновлялку громкости
     }, 5000);
   });
 
-  // фильтры
+  // фильтры яркость, контраст
   brightnessControl.addEventListener('change', (e) => {
     popupVideo.style.filter = `brightness(${e.target.value}%)`;
   });
