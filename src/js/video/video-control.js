@@ -3,6 +3,7 @@
 (function controlVideoStream() {
   const streams = ['sosed', 'cat', 'dog', 'hall'];
 
+
   // инициализация видео
   function initVideo(video, url) {
     if (Hls.isSupported()) {
@@ -26,6 +27,41 @@
     return streams[key - 1];
   }
 
+  // поиск среднего в массиве
+  function average(arr) {
+    return arr.reduce((p, c) => p + c, 0) / arr.length;
+  }
+
+  // создание аналайзера
+  function createAnalyser(elem) {
+    if (!window.webkitAudioContext && !window.AudioContext) {
+      alert('Ваш браузер не поддерживает Web Audio API');
+    }
+
+    window.context = new (window.AudioContext || window.webkitAudioContext)();
+    window.source = window.context.createMediaElementSource(elem);
+
+    window.analyserNode = new AnalyserNode(window.context, {
+      fftSize: 64,
+      maxDecibels: -25,
+      minDecibels: -100,
+      smoothingTimeConstant: 0.8,
+    });
+
+    window.source.connect(window.analyserNode);
+    window.analyserNode.connect(window.context.destination);
+  }
+
+  function getVolume(analyserNode) {
+    const frequencies = analyserNode.frequencyBinCount;
+    const myDataArray = new Uint8Array(frequencies);
+    analyserNode.getByteFrequencyData(myDataArray);
+
+    return average(myDataArray) / 128;
+  }
+
+
+  // инитим потоки  каждый тег video
   const videos = Array.from(document.querySelectorAll('main .card__video'));
 
   videos.forEach(video => {
@@ -33,49 +69,7 @@
     initVideo(video, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${streamItem}%2Fmaster.m3u8`);
   });
 
-  function average(arr) {
-    return arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
-
-  }
-
-  function analyzeAudio(elem) {
-    const volume = document.querySelector('.popup__volume');
-
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    if (AudioContext) {
-      // ...
-    } else {
-      alert('Ваш браузер не поддерживает Web Audio API');
-    }
-    const source = context.createMediaElementSource(elem);
-    const destination = context.destination;
-    const analyserNode = new AnalyserNode(context, {
-      fftSize: 64,
-      maxDecibels: -25,
-      minDecibels: -100,
-      smoothingTimeConstant: 0.8,
-    });
-
-
-    source.connect(analyserNode);
-    analyserNode.connect(destination);
-    setInterval(() => {
-      const frequencies = analyserNode.frequencyBinCount;
-      const myDataArray = new Uint8Array(frequencies);
-      analyserNode.getByteFrequencyData(myDataArray);
-
-
-      const max = average(myDataArray) / 255;
-      // console.log(myDataArray);
-
-
-      volume.style.transform = `scaleY(${max})`;
-    }, 200);
-
-
-  }
-
-  //попап
+  //попап по клику
   let transform;
   let popupVideo;
   const popup = document.querySelector('.page__popup');
@@ -84,6 +78,8 @@
   const controls = document.querySelectorAll('.popup__control-wrap');
   const brightnessControl = document.querySelector('.popup__control_brightness');
   const contrastControl = document.querySelector('.popup__control_contrast');
+  const volume = document.querySelector('.popup__volume');
+  let intervalId;
 
   videos.forEach(video => {
     video.addEventListener('click', (e) => {
@@ -111,7 +107,17 @@
       setTimeout(() => {
         popupVideo.classList.add('popup__video_full');
         popupVideo.muted = false;
-        analyzeAudio(popupVideo);
+
+        if (window.context === undefined) {
+          createAnalyser(popupVideo);
+        }
+
+        const updateVolumeBar = () => {
+          const averageVolume = getVolume(window.analyserNode);
+          volume.style.transform = `scaleY(${averageVolume})`;
+        };
+
+        intervalId = setInterval(updateVolumeBar, 200);
       }, 0);
 
       setTimeout(() => {
@@ -123,7 +129,7 @@
     });
   });
 
-  // кнопка Все камеры
+  // обратная анимация по кнопке назад (Все камеры)
   backBtn.addEventListener('click', () => {
     popup.querySelector('.card__video').classList.remove('popup__video_full');
     page.style.overflow = 'auto';
@@ -136,10 +142,10 @@
       video.play();
     });
 
-
     setTimeout(function () {
       popup.style.display = 'none';
       popupVideo.setAttribute('src', '');
+      clearInterval(intervalId);
     }, 5000);
   });
 
@@ -152,5 +158,7 @@
     popupVideo.style.filter = `contrast(${e.target.value}%)`;
   });
 
-  //датчик движения
+  // TODO датчик движения
+  // открисовка видео на канвас 10*10, получение скриншотов, обход по rgba, скрин сравнить с предыдущим, если изменился цвет - поменять прозрачность, т.о. квадрат в котором движение затемнен.
+
 })();

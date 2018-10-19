@@ -1,260 +1,258 @@
 .card {
-    position: relative;
-    border-radius: 22px;
-    background-color: $card-color;
+  position: relative;
+  border-radius: 22px;
+  background-color: $card-color;
+  background-repeat: no-repeat;
+
+  &:active {
+    background-color: #f3f3f3;
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
+  }
+
+  &:active .card__extra-content {
+    background-color: #f3f3f3;
+  }
+
+  &_action_critical {
+    background-color: $critical-color;
+    color: #fff;
+  }
+
+  &_action_critical:active {
+    background-color: $critical-color;
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
+  }
+
+  &_icon_stats {
+    background-image: url(" ../img/stats.svg");
+    background-position: 17px 27px;
+    background-size: 35px 17px;
+  }
+
+  &_icon_key {
+    background-image: url(" ../img/key.svg");
+    background-position: 17px 18px;
+    background-size: 35px 35px;
+  }
+
+  &_icon_robot-cleaner {
+    background-image: url(" ../img/robot-cleaner.svg");
+    background-position: 17px 24px;
+    background-size: 35px 21px;
+  }
+
+  &_icon_router {
+    background-image: url(" ../img/router.svg");
+    background-position: 18px 20px;
+    background-size: 34px 31px;
+  }
+
+  &_icon_thermal {
+    background-image: url(" ../img/temperature.svg");
+    background-position: 18px 18px;
+    background-size: 35px 35px;
+  }
+
+  &_icon_ac {
+    background-image: url(" ../img/air-conditioner.svg");
+    background-position: 17px 20px;
+    background-size: 35px 29px;
+  }
+
+  &_action_critical.card_icon_ac {
+    background-image: url(" ../img/ac-white.svg");
+  }
+
+  &_icon_music {
+    background-image: url(" ../img/music.svg");
+    background-position: 16px 16px;
+    background-size: 36px 37px;
+  }
+
+  &_icon_fridge {
+    background-image: url(" ../img/fridge.svg");
+    background-position: 20px 17px;
+    background-size: 28px 35px;
+  }
+
+  &_icon_battery {
+    background-image: url(" ../img/battery.svg");
+    background-position: 17px 25px;
+    background-size: 35px 18px;
+  }
+
+  &_icon_cam {
+    background-image: url(" ../img/cam.svg");
+    background-position: 17px 21px;
+    background-size: 35px 26px;
+  }
+
+  &_action_critical.card_icon_cam {
+    background-image: url(" ../img/cam-white.svg");
+  }
+
+  &_icon_kettle {
+    background-image: url(" ../img/kettle.svg");
+    background-position: 20px 17px;
+    background-size: 30px 35px;
+  }
+
+  &__close-btn,
+  &__open-btn {
+    width: 17px;
+    height: 17px;
+    position: absolute;
     background-repeat: no-repeat;
+    background-position: center;
+  }
 
-    &:active {
-        background-color: #f3f3f3;
-        box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
-    }
+  &__close-btn {
+    top: 15px;
+    right: 15px;
+    background-image: url(" ../img/cross.svg");
+  }
 
-    &:active .card__extra-content {
-        background-color: #f3f3f3;
-    }
+  &_action_critical &__close-btn {
+    background-image: url(" ../img/cross-white.svg");
+  }
 
-    &_action_critical {
-        background-color: $critical-color;
-        color: #fff;
-    }
+  &__open-btn {
+    bottom: 15px;
+    right: 10px;
+    background-image: url(" ../img/next.svg");
+    background-size: 11px 17px;
+  }
 
-    &_action_critical:active {
-        background-color: $critical-color;
-        box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
-    }
+  &__wrapper {
+    padding: 18px 35px 0 16px;
+    display: flex;
+    flex-direction: column;
+  }
 
-    &_icon_stats {
-        background-image: url(" ../img/stats.svg");
-        background-position: 17px 27px;
-        background-size: 35px 17px;
-    }
+  &__title-wrap {
+    height: 36px;
+    overflow-y: hidden;
+    position: relative;
+  }
 
-    &_icon_key {
-        background-image: url(" ../img/key.svg");
-        background-position: 17px 18px;
-        background-size: 35px 35px;
-    }
+  &__title {
+    font-size: 0.7rem;
+    line-height: 0.85rem;
+    margin: 0 0 0 51px;
+    position: relative;
+    text-overflow: ellipsis;
+  }
 
-    &_icon_robot-cleaner {
-        background-image: url(" ../img/robot-cleaner.svg");
-        background-position: 17px 24px;
-        background-size: 35px 21px;
-    }
+  &__description {
+    font-size: 0.9rem;
+    color: #333;
+    padding-top: 16px;
+  }
 
-    &_icon_router {
-        background-image: url(" ../img/router.svg");
-        background-position: 18px 20px;
-        background-size: 34px 31px;
-    }
+  &__widget {
+    margin-top: 20px;
+  }
 
-    &_icon_thermal {
-        background-image: url(" ../img/temperature.svg");
-        background-position: 18px 18px;
-        background-size: 35px 35px;
-    }
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0;
+  }
 
-    &_icon_ac {
-        background-image: url(" ../img/air-conditioner.svg");
-        background-position: 17px 20px;
-        background-size: 35px 29px;
-    }
+  &__source,
+  &__time {
+    font-size: 0.6rem;
+    line-height: 0.7rem;
+    margin: 15px 0 0;
+  }
 
-    &_action_critical.card_icon_ac {
-        background-image: url(" ../img/ac-white.svg");
-    }
+  &__time {
+    text-align: right;
+  }
 
-    &_icon_music {
-        background-image: url(" ../img/music.svg");
-        background-position: 16px 16px;
-        background-size: 36px 37px;
-    }
+  &__extra-content {
+    border-radius: 18px;
+    background-color: $card-color;
+    padding: 0 35px 16px 16px;
+  }
 
-    &_icon_fridge {
-        background-image: url(" ../img/fridge.svg");
-        background-position: 20px 17px;
-        background-size: 28px 35px;
-    }
+  &_type_video {
+    padding: 18px 16px;
+    font-size: 0;
+    line-height: 0;
+  }
 
-    &_icon_battery {
-        background-image: url(" ../img/battery.svg");
-        background-position: 17px 25px;
-        background-size: 35px 18px;
-    }
+  &__wrapper_video {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+  }
 
-    &_icon_cam {
-        background-image: url(" ../img/cam.svg");
-        background-position: 17px 21px;
-        background-size: 35px 26px;
-    }
-
-    &_action_critical.card_icon_cam {
-        background-image: url(" ../img/cam-white.svg");
-    }
-
-    &_icon_kettle {
-        background-image: url(" ../img/kettle.svg");
-        background-position: 20px 17px;
-        background-size: 30px 35px;
-    }
-
-    &__close-btn,
-    &__open-btn {
-        width: 17px;
-        height: 17px;
-        position: absolute;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-
-    &__close-btn {
-        top: 15px;
-        right: 15px;
-        background-image: url(" ../img/cross.svg");
-    }
-
-    &_action_critical &__close-btn {
-        background-image: url(" ../img/cross-white.svg");
-    }
-
-    &__open-btn {
-        bottom: 15px;
-        right: 10px;
-        background-image: url(" ../img/next.svg");
-        background-size: 11px 17px;
-    }
-
-    &__wrapper {
-        padding: 18px 35px 0 16px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__title-wrap {
-        height: 36px;
-        overflow-y: hidden;
-        position: relative;
-    }
-
-    &__title {
-        font-size: 0.7rem;
-        line-height: 0.85rem;
-        margin: 0 0 0 51px;
-        position: relative;
-        text-overflow: ellipsis;
-    }
-
-    &__description {
-        font-size: 0.9rem;
-        color: #333;
-        padding-top: 16px;
-    }
-
-    &__widget {
-        margin-top: 20px;
-    }
-
-    &__info {
-        display: flex;
-        justify-content: space-between;
-        margin: 16px 0;
-    }
-
-    &__source,
-    &__time {
-        font-size: 0.6rem;
-        line-height: 0.7rem;
-        margin: 15px 0 0;
-    }
-
-    &__time {
-        text-align: right;
-    }
-
-    &__extra-content {
-        border-radius: 18px;
-        background-color: $card-color;
-        padding: 0 35px 16px 16px;
-    }
-
-    &_type_video {
-        padding: 18px 16px;
-        font-size: 0px;
-        line-height: 0px;
-        //max-height: 30vh;
-        //max-width: 30vw;
-    }
-
-    &__wrapper_video {
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        font-size: 0px;
-        line-height: 0px;
-    }
-
-    &__video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        font-size: 0px;
-        line-height: 0px;
-    }
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    font-size: 0;
+    line-height: 0;
+  }
 }
 
 @media only screen and (min-width: 680px) {
-    .card {
-        display: flex;
-        flex-direction: column;
+  .card {
+    display: flex;
+    flex-direction: column;
 
-        &__wrapper {
-            padding-top: 16px;
-        }
-
-        &__title-wrap {
-            height: 40px;
-        }
-
-        &__extra-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        &__description {
-            margin-bottom: auto;
-        }
+    &__wrapper {
+      padding-top: 16px;
     }
 
-    .card_size_s .card__info {
-        flex-direction: column;
+    &__title-wrap {
+      height: 40px;
     }
 
-    .card_size_s .card__time {
-        text-align: left;
+    &__extra-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
+
+    &__description {
+      margin-bottom: auto;
+    }
+  }
+
+  .card_size_s .card__info {
+    flex-direction: column;
+  }
+
+  .card_size_s .card__time {
+    text-align: left;
+  }
 }
 
 @media only screen and (min-width: 920px) {
-    .card {
-        &__description {
-            font-size: 0.67rem;
-        }
-
-        &__title-wrap {
-            height: 48px;
-        }
+  .card {
+    &__description {
+      font-size: 0.67rem;
     }
 
-    .card_size_l .card__description {
-        font-size: 0.8em;
+    &__title-wrap {
+      height: 48px;
     }
+  }
+
+  .card_size_l .card__description {
+    font-size: 0.8em;
+  }
 }
 
 @media only screen and (min-width: 1500px) {
-    .card {
-        &__title-wrap {
-            height: 58px;
-        }
+  .card {
+    &__title-wrap {
+      height: 58px;
     }
+  }
 }
