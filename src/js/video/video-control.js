@@ -151,11 +151,11 @@
   });
 
   // фильтры яркость, контраст
-  brightnessControl.addEventListener('change', (e) => {
+  brightnessControl.addEventListener('input', (e) => {
     popupVideo.style.filter = `brightness(${e.target.value}%)`;
   });
 
-  contrastControl.addEventListener('change', (e) => {
+  contrastControl.addEventListener('input', (e) => {
     popupVideo.style.filter = `contrast(${e.target.value}%)`;
   });
 
