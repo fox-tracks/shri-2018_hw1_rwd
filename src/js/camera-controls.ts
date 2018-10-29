@@ -13,8 +13,8 @@ interface Diff {
 }
 
 function initCameraGesture(){
-  const PERCENTAGE_COEF = 100;
-  const BG_SIZE_COVER_VALUE = 135; // значение background-size при котором фон покрывает контейнер по высоте
+  const PERCENTAGE_COEF: number = 100;
+  const BG_SIZE_COVER_VALUE: number = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
   const camera = document.querySelector('.camera') as HTMLElement;
   const zoomValue = document.querySelector('.camera__zoom-value') as HTMLElement;
@@ -22,12 +22,12 @@ function initCameraGesture(){
   const scroll = document.querySelector('.camera__scroll') as HTMLElement;
 
 
-  const cameraWidth = camera.getBoundingClientRect().width;
+  const cameraWidth: number = camera.getBoundingClientRect().width;
 
-  let curBrightness = 50;
-  let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
-  let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
-  let prevBgPositionY = + (((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
+  let curBrightness: number = 50;
+  let prevBgSize: number = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
+  let prevBgPositionX: number= + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
+  let prevBgPositionY: number = + (((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
 
   let gesture: PointerInfo | undefined;
   let evCache: PointerInfo[] = [];
@@ -54,16 +54,16 @@ function initCameraGesture(){
   function setcurBrightness (value: number) {
     curBrightness = value;
 
-    const curBrightnessDisplayValue = Math.round(value) + '%';
+    const curBrightnessDisplayValue: string = Math.round(value) + '%';
 
     brightValue.innerHTML = curBrightnessDisplayValue;
     camera.style.filter = 'brightness(' +  curBrightnessDisplayValue + ')';
   }
 
-  function getAngle (ev1: PointerEvent , ev2: PointerEvent) {
-    let diffX= (ev1.x - ev2.x);
-    let diffY = (ev1.y - ev2.y);
-    let angleRad = Math.atan2(diffY, diffX);
+  function getAngle (ev1: PointerEvent , ev2: PointerEvent): number {
+    let diffX: number = (ev1.x - ev2.x);
+    let diffY: number  = (ev1.y - ev2.y);
+    let angleRad : number = Math.atan2(diffY, diffX);
 
     return (angleRad * (180 / Math.PI));
   }
@@ -80,7 +80,7 @@ function initCameraGesture(){
     return value;
   }
 
-  function processRotate (rotateCache: PointerEvent[]) {
+  function processRotate (rotateCache: PointerEvent[]): void {
     if(rotateCache.length !== 2) {
       initAngle = undefined;
       initBrightness = undefined;
@@ -88,17 +88,17 @@ function initCameraGesture(){
 
     }
 
-    const [ ev1, ev2 ] = rotateCache;
-    const angle = getAngle(ev1, ev2);
+    const [ ev1, ev2 ]: PointerEvent[] = rotateCache;
+    const angle: number = getAngle(ev1, ev2);
 
     if(initAngle === undefined || initBrightness === undefined) {
       initAngle = angle;
       initBrightness = curBrightness;
     } else {
-      const difAngle = angle - initAngle;
-      const newBrightness = initBrightness + difAngle;
+      const difAngle: number = angle - initAngle;
+      const newBrightness: number = initBrightness + difAngle;
 
-      const limitedNewBrightness = applyLimit(newBrightness, 0, 200);
+      const limitedNewBrightness: number = applyLimit(newBrightness, 0, 200);
 
       setcurBrightness(limitedNewBrightness);
     }

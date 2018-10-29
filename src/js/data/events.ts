@@ -1,17 +1,17 @@
-enum EventType {
+export enum EventType {
  info = "info",
  critical = "critical"
 }
 
-enum SizeType {
+export enum SizeType {
   s = "s",
   m = "m",
   l = "l"
 }
 
-type HomeEventData = ChartData | EnviromentData | MusicData | DialogData | CameraData;
+export type HomeEventData = ChartData | EnviromentData | MusicData | DialogData | CameraData;
 
-interface HomeEvent {
+export interface HomeEvent {
   type: EventType;
   title: string;
   source: string;
@@ -22,17 +22,17 @@ interface HomeEvent {
   data?: HomeEventData;
 }
 
-interface ChartData {
+export interface ChartData {
   type: string;
   values: Array<Record<string, [string, number][]>>;
 }
 
-interface EnviromentData {
+export interface EnviromentData {
   temperature: number;
   humidity: number;
 }
 
-interface MusicData {
+export interface MusicData {
   albumcover: string;
   artist: string;
   track: {
@@ -42,15 +42,15 @@ interface MusicData {
   volume: number;
 }
 
-interface DialogData {
+export interface DialogData {
   buttons: [string, string];
 }
 
-interface CameraData {
+export interface CameraData {
   image: string;
 }
 
-const data: HomeEvent[] = [
+export const data: HomeEvent[] = [
   {
     "type": EventType.info,
     "title": "Еженедельный отчет по расходам ресурсов",

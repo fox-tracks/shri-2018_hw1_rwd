@@ -1,12 +1,25 @@
 // скрипты
 'use strict';
+exports.__esModule = true;
+var events_1 = require("./data/events");
+function requireSelector(parent, selector) {
+    var element = parent.querySelector(selector);
+    if (!(element instanceof HTMLElement)) {
+        throw new Error();
+    }
+    return element;
+}
 (function () {
     // карточка события
-    var events = window.data;
-    var template = document.querySelector('template').content.querySelector('article.event-feed__card');
+    var events = events_1.data;
+    var templateElement = document.querySelector('template');
+    if (templateElement === null) {
+        throw Error;
+    }
+    var template = requireSelector(templateElement.content, 'article.event-feed__card');
     var cardContainer = document.querySelector('.event-feed__wrapper');
     // генерация виджетов
-    // график
+    // графикs
     // todo chart.js(canvas, new chart, data, options)
     function createGraph() {
         var IMG_PATH = 'img/'; // относительный путь до картинок
@@ -45,15 +58,18 @@
     }
     function createCardByData(template, dataItem) {
         var card = template.cloneNode(true);
+        if (!(card instanceof HTMLElement)) {
+            throw new Error();
+        }
         var icon = dataItem.icon;
-        var extraContent = card.querySelector('div.card__extra-content');
+        var extraContent = requireSelector(card, 'div.card__extra-content');
         card.classList.add('card_icon_' + icon);
         card.classList.add('card_size_' + dataItem.size);
         card.classList.add('event-feed__card_size_' + dataItem.size);
         card.classList.add('card_action_' + dataItem.type);
-        card.querySelector('h3.card__title').textContent = dataItem.title;
-        card.querySelector('p.card__source').textContent = dataItem.source;
-        card.querySelector('p.card__time').textContent = dataItem.time;
+        requireSelector(card, 'h3.card__title').textContent = dataItem.title;
+        requireSelector(card, 'p.card__source').textContent = dataItem.source;
+        requireSelector(card, 'p.card__time').textContent = dataItem.time;
         if (dataItem.description !== null) {
             var description = document.createElement('div');
             description.classList.add('card__description');
@@ -67,19 +83,19 @@
             var widget = document.createElement('div');
             widget.classList.add('card__widget');
             widget.classList.add('widget');
-            var data = dataItem.data;
+            var data_1 = dataItem.data;
             switch (icon) {
                 case 'stats':
-                    widget.innerHTML = createGraph(data);
+                    widget.innerHTML = createGraph();
                     break;
                 case 'thermal':
-                    widget.innerHTML = getClimateParams(data);
+                    widget.innerHTML = getClimateParams(data_1);
                     break;
                 case 'music':
-                    widget.innerHTML = createPlayer(data);
+                    widget.innerHTML = createPlayer(data_1);
                     break;
                 case 'fridge':
-                    widget.innerHTML = createDialogue(data);
+                    widget.innerHTML = createDialogue(data_1);
                     break;
                 case 'cam':
                     widget.innerHTML = createVideo();
@@ -101,8 +117,10 @@
     }
     function renderCards(data) {
         var fragment = createFragmentWithCards(data);
-        cardContainer.appendChild(fragment);
-        return cardContainer;
+        if (cardContainer) {
+            cardContainer.appendChild(fragment);
+            return cardContainer;
+        }
     }
     return renderCards(events);
 })();

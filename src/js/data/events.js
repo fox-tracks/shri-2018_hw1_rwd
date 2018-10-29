@@ -1,15 +1,17 @@
+"use strict";
+exports.__esModule = true;
 var EventType;
 (function (EventType) {
     EventType["info"] = "info";
     EventType["critical"] = "critical";
-})(EventType || (EventType = {}));
+})(EventType = exports.EventType || (exports.EventType = {}));
 var SizeType;
 (function (SizeType) {
     SizeType["s"] = "s";
     SizeType["m"] = "m";
     SizeType["l"] = "l";
-})(SizeType || (SizeType = {}));
-var data = [
+})(SizeType = exports.SizeType || (exports.SizeType = {}));
+exports.data = [
     {
         "type": EventType.info,
         "title": "Еженедельный отчет по расходам ресурсов",

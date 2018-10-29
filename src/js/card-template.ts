@@ -1,14 +1,25 @@
 // скрипты
 'use strict';
+import {ChartData, data, DialogData, EnviromentData, HomeEvent, MusicData} from './data/events';
+
+function requireSelector(parent: HTMLElement | DocumentFragment, selector: string ): HTMLElement {
+    const element = parent.querySelector(selector);
+
+    if(!(element instanceof HTMLElement)) {
+        throw new Error();
+    }
+
+    return element;
+}
 
 (function () {
   // карточка события
-  const events = window.data;
+  const events = data;
   const templateElement: HTMLTemplateElement | null = document.querySelector('template');
   if (templateElement === null) {
     throw Error;
   }
-  const template: HTMLElement | null = templateElement.content.querySelector('article.event-feed__card');
+  const template: HTMLElement = requireSelector(templateElement.content, 'article.event-feed__card');
   const cardContainer: HTMLElement | null = document.querySelector('.event-feed__wrapper');
 
   // генерация виджетов
@@ -37,7 +48,7 @@
   }
 
   // климатические характеристики
-  function getClimateParams(data) {
+  function getClimateParams(data: EnviromentData) {
     const {temperature, humidity} = data;
 
     return (`<div class="widget__wrap climate">
@@ -47,7 +58,7 @@
   }
 
   // музыкальный плейер
-  function createPlayer(data) {
+  function createPlayer(data: MusicData) {
     const {albumcover, artist, volume} = data;
     const {name, length} = data.track;
 
@@ -66,7 +77,7 @@
   }
 
   // диалоговая панель
-  function createDialogue(data) {
+  function createDialogue(data: DialogData) {
     const {buttons} = data;
 
     return (`<div class="widget__wrap dialogue">
@@ -86,19 +97,24 @@
             </div>`;
   }
 
-  function createCardByData(template, dataItem) {
+  function createCardByData(template: HTMLElement, dataItem: HomeEvent) {
     const card = template.cloneNode(true);
+    if(!(card instanceof HTMLElement)) {
+      throw new Error();
+    }
+
     const {icon} = dataItem;
-    const extraContent = card.querySelector('div.card__extra-content');
+    const extraContent: HTMLElement = requireSelector(card, 'div.card__extra-content');
 
     card.classList.add('card_icon_' + icon);
     card.classList.add('card_size_' + dataItem.size);
     card.classList.add('event-feed__card_size_' + dataItem.size);
     card.classList.add('card_action_' + dataItem.type);
 
-    card.querySelector('h3.card__title').textContent = dataItem.title;
-    card.querySelector('p.card__source').textContent = dataItem.source;
-    card.querySelector('p.card__time').textContent = dataItem.time;
+      requireSelector(card, 'h3.card__title').textContent =  dataItem.title;
+      requireSelector(card, 'p.card__source').textContent =  dataItem.source;
+      requireSelector(card, 'p.card__time').textContent =  dataItem.time;
+
 
     if (dataItem.description !== null) {
       let description = document.createElement('div');
@@ -120,16 +136,16 @@
 
       switch (icon) {
       case 'stats':
-        widget.innerHTML = createGraph(data);
+        widget.innerHTML = createGraph();
         break;
-      case 'thermal':
-        widget.innerHTML = getClimateParams(data);
+          case 'thermal':
+        widget.innerHTML = getClimateParams(data as EnviromentData);
         break;
       case 'music':
-        widget.innerHTML = createPlayer(data);
+        widget.innerHTML = createPlayer(data as MusicData);
         break;
       case 'fridge':
-        widget.innerHTML = createDialogue(data);
+        widget.innerHTML = createDialogue(data as DialogData);
         break;
       case 'cam':
         widget.innerHTML = createVideo();
@@ -142,7 +158,7 @@
     return card;
   }
 
-  function createFragmentWithCards(data) {
+  function createFragmentWithCards(data: HomeEvent[]) {
     const fragment = document.createDocumentFragment();
 
     data.forEach(dataItem => {
@@ -154,7 +170,7 @@
     return fragment;
   }
 
-  function renderCards(data) {
+  function renderCards(data: HomeEvent[]) {
     const fragment = createFragmentWithCards(data);
     if(cardContainer) {
     cardContainer.appendChild(fragment);
