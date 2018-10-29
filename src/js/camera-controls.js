@@ -11,9 +11,9 @@ function initCameraGesture() {
     var prevBgSize = +((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
     var prevBgPositionX = +(((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
     var prevBgPositionY = +(((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
-    var gesture = null;
-    var evCache = new Array();
-    var rotateCache = new Array();
+    var gesture;
+    var evCache = [];
+    var rotateCache = [];
     var prevDiff = {
         x: 0,
         y: 0
@@ -38,8 +38,7 @@ function initCameraGesture() {
         var diffX = (ev1.x - ev2.x);
         var diffY = (ev1.y - ev2.y);
         var angleRad = Math.atan2(diffY, diffX);
-        var angleDeg = (angleRad * (180 / Math.PI));
-        return angleDeg;
+        return (angleRad * (180 / Math.PI));
     }
     function applyLimit(value, lowLimit, hightLimit) {
         if (value <= lowLimit) {
@@ -58,7 +57,7 @@ function initCameraGesture() {
         }
         var ev1 = rotateCache[0], ev2 = rotateCache[1];
         var angle = getAngle(ev1, ev2);
-        if (initAngle === undefined) {
+        if (initAngle === undefined || initBrightness === undefined) {
             initAngle = angle;
             initBrightness = curBrightness;
         }
@@ -101,7 +100,10 @@ function initCameraGesture() {
                     break;
                 }
             }
-            var curDiff = {};
+            var curDiff = {
+                x: 0,
+                y: 0
+            };
             curDiff.x = evCache[1].startX - evCache[0].startX;
             curDiff.y = evCache[1].startY - evCache[0].startY;
             var increaseX = void 0;
@@ -116,9 +118,9 @@ function initCameraGesture() {
                     currentBgSize = prevBgSize + increaseX;
                 }
                 camera.style.backgroundSize = currentBgSize + '%';
+                prevDiff.x = curDiff.x;
+                prevBgSize = currentBgSize;
             }
-            prevDiff.x = curDiff.x;
-            prevBgSize = currentBgSize;
         }
         if (evCache.length < 2) {
             if (!gesture) {
@@ -133,7 +135,7 @@ function initCameraGesture() {
             if ((startPositionX + difX) >= 0) {
                 camera.style.backgroundPositionX = '0px';
                 prevBgPositionX = 0;
-                scroll.style.left = 0;
+                scroll.style.left = '0';
             }
             // ограничение на правую границу
             else if ((startPositionX + difX) < 0 && Math.abs(startPositionX + difX) >= (prevBgSizePx - cameraWidth)) {

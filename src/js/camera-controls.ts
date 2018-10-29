@@ -1,28 +1,43 @@
 'use strict';
+interface PointerInfo {
+    id: number,
+    startX: number,
+    startY: number,
+    startPositionX: number;
+    startPositionY: number;
+}
+
+interface Diff {
+  x: number;
+  y: number;
+}
 
 function initCameraGesture(){
   const PERCENTAGE_COEF = 100;
   const BG_SIZE_COVER_VALUE = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
-  const camera = document.querySelector('.camera');
-  const zoomValue = document.querySelector('.camera__zoom-value');
-  const brightValue = document.querySelector('.camera__brightness-value');
-  const scroll = document.querySelector('.camera__scroll');
+  const camera = document.querySelector('.camera') as HTMLElement;
+  const zoomValue = document.querySelector('.camera__zoom-value') as HTMLElement;
+  const brightValue = document.querySelector('.camera__brightness-value') as HTMLElement;
+  const scroll = document.querySelector('.camera__scroll') as HTMLElement;
+
+
   const cameraWidth = camera.getBoundingClientRect().width;
 
   let curBrightness = 50;
   let prevBgSize = + ((getComputedStyle(camera).getPropertyValue('background-size')).slice(0, -1));
   let prevBgPositionX = + (((getComputedStyle(camera).getPropertyValue('background-position-x')).split('px'))[0]) || 0;
   let prevBgPositionY = + (((getComputedStyle(camera).getPropertyValue('background-position-y')).split('px'))[0]) || 0;
-  let gesture = null;
-  let evCache = new Array();
-  let rotateCache = new Array();
+
+  let gesture: PointerInfo | undefined;
+  let evCache: PointerInfo[] = [];
+  let rotateCache: PointerEvent[] = [];
   let prevDiff = {
     x: 0,
     y: 0
   };
-  let initAngle;
-  let initBrightness;
+  let initAngle: number | undefined;
+  let initBrightness: number | undefined;
 
   camera.style.touchAction = 'none';
   camera.setAttribute('touch-action', 'none');
@@ -36,7 +51,7 @@ function initCameraGesture(){
 
 
 
-  function setcurBrightness (value) {
+  function setcurBrightness (value: number) {
     curBrightness = value;
 
     const curBrightnessDisplayValue = Math.round(value) + '%';
@@ -45,16 +60,15 @@ function initCameraGesture(){
     camera.style.filter = 'brightness(' +  curBrightnessDisplayValue + ')';
   }
 
-  function getAngle (ev1, ev2) {
+  function getAngle (ev1: PointerEvent , ev2: PointerEvent) {
     let diffX= (ev1.x - ev2.x);
     let diffY = (ev1.y - ev2.y);
     let angleRad = Math.atan2(diffY, diffX);
-    let angleDeg = (angleRad * (180 / Math.PI));
 
-    return angleDeg;
+    return (angleRad * (180 / Math.PI));
   }
 
-  function applyLimit (value, lowLimit, hightLimit) {
+  function applyLimit (value: number, lowLimit: number, hightLimit: number) {
     if(value <= lowLimit) {
       return lowLimit;
     }
@@ -66,7 +80,7 @@ function initCameraGesture(){
     return value;
   }
 
-  function processRotate (rotateCache) {
+  function processRotate (rotateCache: PointerEvent[]) {
     if(rotateCache.length !== 2) {
       initAngle = undefined;
       initBrightness = undefined;
@@ -77,7 +91,7 @@ function initCameraGesture(){
     const [ ev1, ev2 ] = rotateCache;
     const angle = getAngle(ev1, ev2);
 
-    if(initAngle === undefined) {
+    if(initAngle === undefined || initBrightness === undefined) {
       initAngle = angle;
       initBrightness = curBrightness;
     } else {
@@ -91,7 +105,7 @@ function initCameraGesture(){
 
   }
 
-  function pointerdownHandler(ev) {
+  function pointerdownHandler(ev: PointerEvent) {
     camera.setPointerCapture(ev.pointerId);
 
     rotateCache.push(ev);
@@ -114,7 +128,7 @@ function initCameraGesture(){
 
   }
 
-  function pointermoveHandler(ev) {
+  function pointermoveHandler(ev: PointerEvent) {
     for (let i = 0; i < rotateCache.length; i++) {
       if (ev.pointerId === rotateCache[i].pointerId) {
 
@@ -134,7 +148,11 @@ function initCameraGesture(){
         }
       }
 
-      let curDiff = {};
+      let curDiff: Diff = {
+        x: 0,
+        y: 0
+      };
+
 
       curDiff.x = evCache[1].startX - evCache[0].startX;
       curDiff.y = evCache[1].startY - evCache[0].startY;
@@ -153,10 +171,11 @@ function initCameraGesture(){
         }
 
         camera.style.backgroundSize = currentBgSize + '%';
+        prevDiff.x = curDiff.x;
+        prevBgSize = currentBgSize;
       }
 
-      prevDiff.x = curDiff.x;
-      prevBgSize = currentBgSize;
+
     }
 
     if(evCache.length < 2) {
@@ -174,7 +193,7 @@ function initCameraGesture(){
       if((startPositionX + difX) >= 0) {
         camera.style.backgroundPositionX = '0px';
         prevBgPositionX = 0;
-        scroll.style.left = 0;
+        scroll.style.left = '0';
       }
       // ограничение на правую границу
       else if ((startPositionX + difX) < 0 && Math.abs(startPositionX + difX) >= (prevBgSizePx - cameraWidth)) {
@@ -190,7 +209,7 @@ function initCameraGesture(){
     }
   }
 
-  function remove_event(ev) {
+  function remove_event(ev: PointerEvent) {
     for (let i = 0; i < evCache.length; i++) {
       if (evCache[i].id === ev.pointerId) {
         evCache.splice(i, 1);
@@ -199,7 +218,7 @@ function initCameraGesture(){
     }
   }
 
-  function pointerupHandler(ev) {
+  function pointerupHandler(ev: PointerEvent) {
     for (let i = 0; i < rotateCache.length; i++) {
       if (rotateCache[i].pointerId === ev.pointerId) {
         rotateCache.splice(i, 1);
