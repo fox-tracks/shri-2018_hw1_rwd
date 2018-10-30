@@ -1,10 +1,10 @@
 'use strict';
 
 (function controlVideoStream() {
-  const streams = ['sosed', 'cat', 'dog', 'hall'];
+  const streams: string[]= ['sosed', 'cat', 'dog', 'hall'];
 
   // инициализация видео
-  function initVideo(video, url) {
+  function initVideo(video: HTMLVideoElement, url: string) {
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(url);
@@ -21,13 +21,13 @@
   }
 
   //выбор стрима
-  function selectStream(elem) {
-    const key = elem.dataset.key;
+  function selectStream(elem: HTMLVideoElement) {
+    const key: string = elem.dataset.key;
     return streams[key - 1];
   }
 
   // поиск среднего в массиве
-  function average(arr) {
+  function average(arr: []) {
     return arr.reduce((p, c) => p + c, 0) / arr.length;
   }
 
@@ -61,7 +61,7 @@
   }
 
   // инитим потоки в каждый тег video
-  const videos = Array.from(document.querySelectorAll('main .card__video'));
+  const videos: HTMLVideoElement[] = Array.from(document.querySelectorAll('main .card__video'));
 
   videos.forEach(video => {
     const streamItem = selectStream(video);
@@ -69,16 +69,16 @@
   });
 
   //попап по клику
-  let transform;
-  let popupVideo;
+  let transform: string;
+  let popupVideo: HTMLElement;
   const popup = document.querySelector('.page__popup');
-  const page = document.querySelector('.page');
+  const page: HTMLElement = document.querySelector('.page');
   const backBtn = document.querySelector('.popup__back-btn');
   const controls = document.querySelectorAll('.popup__control-wrap');
   const brightnessControl = document.querySelector('.popup__control_brightness');
   const contrastControl = document.querySelector('.popup__control_contrast');
   const volume = document.querySelector('.popup__volume');
-  let intervalId;
+  let intervalId: string;
 
   videos.forEach(video => {
     video.addEventListener('click', (e) => {
