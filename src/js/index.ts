@@ -5,4 +5,3 @@ import { initCameraGesture } from './camera-controls';
 initMenu();
 createLayout();
 setTimeout(initCameraGesture, 0);
-

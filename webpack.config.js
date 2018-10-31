@@ -9,9 +9,8 @@ module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
-    events: './src/js/index.ts',
-
-    another: './src/js/card-template.ts'
+    index: './src/js/index.ts',
+    video: './src/js/index.ts'
   },
   output: {
     path: PUBLIC_PATH,

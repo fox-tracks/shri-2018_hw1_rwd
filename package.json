@@ -7,6 +7,7 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "@types/hls.js": "^0.10.2",
     "autoprefixer": "^9.1.5",
     "awesome-typescript-loader": "^5.2.1",
     "browser-sync": "^2.24.7",
@@ -41,7 +42,8 @@
     "fix": "eslint --fix \"src/js/**/*.js\"",
     "test": "npm run stylelint && npm run eslint",
     "build": "gulp build-full",
-    "start": "npm run build && gulp serve"
+    "start": "npm run build && gulp serve",
+    "wp": "webpack"
   },
   "browserslist": [
     "last 4 versions",

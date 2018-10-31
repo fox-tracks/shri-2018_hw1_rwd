@@ -3,8 +3,10 @@
 'use strict';
 
 (function(){
-  const isTouchCapable = 'ontouchstart' in window ||  window.DocumentTouch && document instanceof window.DocumentTouch ||
-    navigator.maxTouchPoints > 0 ||  window.navigator.msMaxTouchPoints > 0;
+  const isTouchCapable = true;
+      // 'ontouchstart' in window ||
+      //window.DocumentTouch && document instanceof window.DocumentTouch ||
+    // navigator.maxTouchPoints > 0;
 
   const cardContainer: HTMLElement | null= document.querySelector('.event-feed__wrapper');
 

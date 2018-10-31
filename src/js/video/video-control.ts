@@ -1,5 +1,15 @@
 'use strict';
-import { requireSelector } from '../selector';
+import {requireSelector, requireSelector2} from '../selector';
+import Hls from 'hls.js';
+
+interface MyWindow {
+    AudioContext: typeof AudioContext;
+    webkitAudioContext: typeof AudioContext;
+    mozAudioContext: typeof AudioContext;
+}
+declare const window: MyWindow;
+
+let context: AudioContext, source: MediaElementAudioSourceNode, analyserNode: AnalyserNode;
 
 (function controlVideoStream() {
   const streams: string[]= ['sosed', 'cat', 'dog', 'hall'];
@@ -23,37 +33,37 @@ import { requireSelector } from '../selector';
 
   //выбор стрима
   function selectStream(elem: HTMLVideoElement) {
-    const key: string = elem.dataset.key;
+    const key: number = Number(elem.dataset.key);
     return streams[key - 1];
   }
 
   // поиск среднего в массиве
-  function average(arr: []) {
+  function average(arr: Uint8Array) {
     return arr.reduce((p, c) => p + c, 0) / arr.length;
   }
 
   // создание аналайзера
-  function createAnalyser(elem) {
+  function createAnalyser(elem: HTMLVideoElement) {
     if (!window.webkitAudioContext && !window.AudioContext) {
       alert('Ваш браузер не поддерживает Web Audio API');
     }
 
-    window.context = new (window.AudioContext || window.webkitAudioContext)();
-    window.source = window.context.createMediaElementSource(elem);
+    context = new (window.AudioContext || window.webkitAudioContext)();
+    source = context.createMediaElementSource(elem);
 
-    window.analyserNode = new AnalyserNode(window.context, {
+    analyserNode = new AnalyserNode(context, {
       fftSize: 64,
       maxDecibels: -25,
       minDecibels: -100,
       smoothingTimeConstant: 0.8,
     });
 
-    window.source.connect(window.analyserNode);
-    window.analyserNode.connect(window.context.destination);
+    source.connect(analyserNode);
+    analyserNode.connect(context.destination);
   }
 
   // получение среднего значения громкости
-  function getVolume(analyserNode) {
+  function getVolume(analyserNode: AnalyserNode) {
     const frequencies = analyserNode.frequencyBinCount;
     const myDataArray = new Uint8Array(frequencies);
     analyserNode.getByteFrequencyData(myDataArray);
@@ -71,15 +81,15 @@ import { requireSelector } from '../selector';
 
   //попап по клику
   let transform: string;
-  let popupVideo: HTMLElement;
-  const popup = document.querySelector('.page__popup');
-  const page: HTMLElement = document.querySelector('.page');
-  const backBtn = document.querySelector('.popup__back-btn');
+  let popupVideo: HTMLVideoElement;
+  const popup = requireSelector(document,'.page__popup');
+  const page = requireSelector(document, '.page');
+  const backBtn = requireSelector(document,'.popup__back-btn');
   const controls = document.querySelectorAll('.popup__control-wrap');
-  const brightnessControl = document.querySelector('.popup__control_brightness');
-  const contrastControl = document.querySelector('.popup__control_contrast');
-  const volume = document.querySelector('.popup__volume');
-  let intervalId: string;
+  const brightnessControl = requireSelector(document,'.popup__control_brightness');
+  const contrastControl = requireSelector(document,'.popup__control_contrast');
+  const volume = requireSelector(document,'.popup__volume');
+  let intervalId: number;
 
   videos.forEach(video => {
     video.addEventListener('click', (e) => {
@@ -89,10 +99,13 @@ import { requireSelector } from '../selector';
 
       const offsetX = Math.floor(((e.pageX * 100) / page.clientWidth) - 50);
       const offsetY = Math.floor(((e.pageY * 100) / page.clientHeight) - 50);
+      if(!(e.target instanceof HTMLVideoElement)) {
+          throw new Error();
+      }
       const rate = e.target.getBoundingClientRect().height / page.clientHeight;
 
 
-      popupVideo = popup.querySelector('.card__video');
+      popupVideo = requireSelector2 <HTMLVideoElement>(popup, '.card__video');
       transform = `translate(${offsetX}%, ${offsetY}%) scale(${rate})`;
       popupVideo.style.transform = transform;
 
@@ -102,20 +115,24 @@ import { requireSelector } from '../selector';
       popupVideo.style.transform = transform;
 
       // инитим поток
+
       const newStreamItem = selectStream(e.target);
       initVideo(popupVideo, `http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2F${newStreamItem}%2Fmaster.m3u8`);
 
       setTimeout(() => {
+        if(!(popupVideo instanceof HTMLVideoElement)) {
+            throw new Error();
+        }
         popupVideo.classList.add('popup__video_full');
         popupVideo.muted = false;
 
-        if (window.context === undefined) {
+        if (context === undefined) {
           createAnalyser(popupVideo);
         }
 
         // функция обновления высоты столбика громкости
         const updateVolumeBar = () => {
-          const averageVolume = getVolume(window.analyserNode);
+          const averageVolume = getVolume(analyserNode);
           volume.style.transform = `scaleY(${averageVolume})`;
         };
 
@@ -133,12 +150,15 @@ import { requireSelector } from '../selector';
 
   // обратная анимация по кнопке назад (Все камеры)
   backBtn.addEventListener('click', () => {
-    popup.querySelector('.card__video').classList.remove('popup__video_full');
+    requireSelector(popup,'.card__video').classList.remove('popup__video_full');
     page.style.overflow = 'auto';
     backBtn.classList.remove('popup__back-btn_active');
     controls.forEach(control => {
       control.classList.remove('popup__control-wrap_active');
     });
+    if(!(popupVideo instanceof HTMLVideoElement)) {
+        throw new Error();
+    }
     popupVideo.style.transform = transform;
     videos.forEach(video => {
       video.play();
@@ -153,10 +173,16 @@ import { requireSelector } from '../selector';
 
   // фильтры яркость, контраст
   brightnessControl.addEventListener('input', (e) => {
+    if(!(e.target instanceof HTMLInputElement)) {
+        throw new Error();
+    }
     popupVideo.style.filter = `brightness(${e.target.value}%)`;
   });
 
   contrastControl.addEventListener('input', (e) => {
+    if(!(e.target instanceof HTMLInputElement)) {
+        throw new Error();
+    }
     popupVideo.style.filter = `contrast(${e.target.value}%)`;
   });
 
