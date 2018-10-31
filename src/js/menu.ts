@@ -2,7 +2,7 @@
 
 'use strict';
 
-(function () {
+export function initMenu() {
   const hamburgerBtn: HTMLInputElement | null = document.querySelector<HTMLInputElement>('.hamburger-btn');
   const mainNav: HTMLElement | null = document.querySelector('.header__nav');
 
@@ -13,4 +13,4 @@
 
     });
   }
-})();
+};

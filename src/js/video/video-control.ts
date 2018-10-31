@@ -1,4 +1,5 @@
 'use strict';
+import { requireSelector } from '../selector';
 
 (function controlVideoStream() {
   const streams: string[]= ['sosed', 'cat', 'dog', 'hall'];

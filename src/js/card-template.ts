@@ -1,18 +1,10 @@
 // скрипты
 'use strict';
-import {ChartData, data, DialogData, EnviromentData, HomeEvent, MusicData} from './data/events';
+import {data, DialogData, EnviromentData, HomeEvent, MusicData} from './data/events';
 
-function requireSelector(parent: HTMLElement | DocumentFragment, selector: string ): HTMLElement {
-    const element = parent.querySelector(selector);
+import { requireSelector } from './selector';
 
-    if(!(element instanceof HTMLElement)) {
-        throw new Error();
-    }
-
-    return element;
-}
-
-(function () {
+export function createLayout() {
   // карточка события
   const events = data;
   const templateElement: HTMLTemplateElement | null = document.querySelector('template');
@@ -179,4 +171,4 @@ function requireSelector(parent: HTMLElement | DocumentFragment, selector: strin
   }
 
   return renderCards(events);
-})();
+}

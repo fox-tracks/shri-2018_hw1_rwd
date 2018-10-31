@@ -9,7 +9,8 @@ module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
-    events: './src/js/data/events.ts',
+    events: './src/js/index.ts',
+
     another: './src/js/card-template.ts'
   },
   output: {

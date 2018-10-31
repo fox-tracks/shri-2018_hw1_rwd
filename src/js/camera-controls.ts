@@ -12,7 +12,7 @@ interface Diff {
   y: number;
 }
 
-function initCameraGesture(){
+export function initCameraGesture(){
   const PERCENTAGE_COEF: number = 100;
   const BG_SIZE_COVER_VALUE: number = 135; // значение background-size при котором фон покрывает контейнер по высоте
 
@@ -236,5 +236,3 @@ function initCameraGesture(){
     }
   }
 }
-
-setTimeout(initCameraGesture, 0);
