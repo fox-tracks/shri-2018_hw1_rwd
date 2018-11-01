@@ -1,18 +1,17 @@
 'use strict';
 exports.__esModule = true;
 var selector_1 = require("../selector");
-var hls_js_1 = require("hls.js");
-var Hls = hls_js_1["default"];
+var Hls = require("hls.js");
 var context, source, analyserNode;
 (function controlVideoStream() {
     var streams = ['sosed', 'cat', 'dog', 'hall'];
     // инициализация видео
     function initVideo(video, url) {
         if (Hls.isSupported()) {
-            var hls_1 = new Hls();
-            hls_1.loadSource(url);
-            hls_1.attachMedia(video);
-            hls_1.on(Hls.Events.MANIFEST_PARSED, function () {
+            var hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
                 video.play();
             });
         }

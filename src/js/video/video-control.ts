@@ -1,6 +1,6 @@
 'use strict';
 import {requireSelector, requireSelector2} from '../selector';
-import Hls from 'hls.js';
+import * as Hls from 'hls.js';
 
 
 interface MyWindow {
