@@ -10,7 +10,7 @@ module.exports = {
   mode: 'production',
   entry: {
     index: './src/js/index.ts',
-    video: './src/js/index.ts'
+    video: './src/js/video/video-control.ts'
   },
   output: {
     path: PUBLIC_PATH,

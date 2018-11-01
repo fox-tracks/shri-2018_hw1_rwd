@@ -2,6 +2,7 @@
 import {requireSelector, requireSelector2} from '../selector';
 import Hls from 'hls.js';
 
+
 interface MyWindow {
     AudioContext: typeof AudioContext;
     webkitAudioContext: typeof AudioContext;
@@ -71,8 +72,23 @@ let context: AudioContext, source: MediaElementAudioSourceNode, analyserNode: An
     return average(myDataArray) / 128;
   }
 
+  function arrayFrom<E extends Element>(nodeList: NodeListOf<E>): E[] {
+    const res: E[] = [];
+
+      nodeList.forEach((nodeItem) => {
+          res.push(nodeItem)
+      });
+
+      return res;
+  }
+
   // инитим потоки в каждый тег video
-  const videos: HTMLVideoElement[] = Array.from(document.querySelectorAll('main .card__video'));
+  const videosList: NodeListOf<HTMLVideoElement> = document.querySelectorAll<HTMLVideoElement>('main .card__video');
+  const videos: HTMLVideoElement[] = arrayFrom(videosList);
+
+    if(videos === null) {
+        throw new Error();
+    }
 
   videos.forEach(video => {
     const streamItem = selectStream(video);
